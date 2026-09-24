@@ -64,7 +64,7 @@ h1{font-size:22px}h2{font-size:16px}h3{font-size:13px;color:var(--muted);font-we
 .tA{background:var(--a-soft);color:var(--a)}.tB{background:var(--b-soft);color:var(--b)}.tC{background:var(--c-soft);color:var(--c)}
 label{display:block;font-size:12.5px;font-weight:500;margin-bottom:5px}
 .field{margin-bottom:14px}
-input[type=text],input[type=url],input[type=number],input[type=date],input[type=datetime-local],select,textarea{width:100%;border:1px solid var(--line-strong);background:var(--surface);border-radius:var(--radius);padding:8px 10px}
+input[type=text],input[type=url],input[type=email],input[type=password],input[type=number],input[type=date],input[type=datetime-local],select,textarea{box-sizing:border-box;width:100%;border:1px solid var(--line-strong);background:var(--surface);border-radius:var(--radius);padding:8px 10px}
 textarea{min-height:120px;resize:vertical}
 .help{font-size:12px;color:var(--muted);margin-top:5px}
 .err{font-size:12px;color:var(--danger);margin-top:5px}
@@ -127,6 +127,9 @@ body.auth .app{display:block}body.auth .side{display:none}body.auth main{padding
 .auth-card .btn.primary{width:100%;padding:11px;font-size:15px;margin-top:6px}
 .auth-links{display:flex;justify-content:space-between;margin-top:16px;font-size:13px}.auth-links a{color:var(--muted)}
 .auth-foot{text-align:center;color:var(--muted);font-size:12px;margin-top:22px}
+
+.pw{position:relative}.pw input{padding-right:40px}.eye{position:absolute;right:6px;top:50%;transform:translateY(-50%);border:0;background:none;color:var(--muted);cursor:pointer;padding:6px;display:flex}.eye:hover{color:var(--ink)}
+.tip{position:relative}.tip::after{content:attr(data-tip);position:absolute;left:50%;bottom:calc(100% + 8px);transform:translateX(-50%);background:var(--ink);color:#fff;font-size:12px;font-weight:400;line-height:1.35;padding:7px 10px;border-radius:8px;width:max-content;max-width:240px;text-align:left;white-space:normal;opacity:0;pointer-events:none;transition:opacity .12s;z-index:20}.tip:hover::after{opacity:1}
 </style>
 </head>
 <body>
@@ -162,9 +165,9 @@ const SB_KEY=SUPABASE_ANON_KEY.length>40?SUPABASE_ANON_KEY:(CFG.key||'');
 let sb=null;
 if(SB_URL&&SB_KEY&&window.supabase)sb=window.supabase.createClient(SB_URL,SB_KEY);
 let USER=null;let PROFILE={};let WSS=[];let WS=null;   // espaços de trabalho (o próprio + convites) e o espaço aberto
-const PERMS=[['create','Criar testes'],['edit','Editar, pausar, encerrar e zerar testes'],['delete','Excluir e arquivar testes'],['domains','Gerenciar domínios']];
+const PERMS=[['view','Ver os testes e resultados'],['create','Criar testes'],['edit','Editar testes'],['status','Pausar e retomar testes'],['finish','Encerrar testes e escolher a versão final'],['reset','Zerar métricas'],['delete','Excluir e arquivar testes'],['domains','Gerenciar domínios']];
 const LOGO_SRC=()=>document.querySelector('.brand img').src;
-function can(perm){if(!WS)return false;if(WS.role==='owner'||WS.role==='admin')return true;return !!(WS.permissions||{})[perm];}
+function can(perm){if(!WS)return false;if(WS.role==='owner'||WS.role==='admin')return true;const p=WS.permissions||{};if(perm==='view')return p.view!==false;return !!p[perm];}
 const isAdmin=()=>WS&&(WS.role==='owner'||WS.role==='admin');
 
 /* ===================== estado (cache do banco) ===================== */
@@ -300,14 +303,19 @@ function renderSetup(){document.body.classList.add('auth');document.getElementBy
   <div class="field"><label>anon public key</label><input type="text" id="cfg-key" class="mono" placeholder="eyJhbGci..." value="${esc(CFG.key||'')}"></div>
   <button class="btn primary" onclick="saveCfg()">Conectar</button></div></div>`;}
 function saveCfg(){let url=document.getElementById('cfg-url').value.trim(),key=document.getElementById('cfg-key').value.trim();try{url=new URL(url).origin;}catch(e){url='';}if(!/^https:\/\/[a-z0-9-]+\.supabase\.co$/.test(url)){toast('A URL precisa ser como https://xxxx.supabase.co');return;}if(key.length<40){toast('Confira a chave.');return;}localStorage.setItem('goat_cfg',JSON.stringify({url,key}));location.reload();}
+function pwField(id,label,extra=''){return`<div class="field"><label>${label}</label><div class="pw"><input type="password" id="${id}" ${extra}><button type="button" class="eye" aria-label="Mostrar senha" onclick="toggleEye('${id}',this)">${EYE_CLOSED}</button></div></div>`;}
+const EYE_CLOSED='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a20.3 20.3 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a20.16 20.16 0 0 1-3.22 4.19"/><line x1="1" y1="1" x2="23" y2="23"/><path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"/></svg>';
+const EYE_OPEN='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
+function toggleEye(id,btn){const i=document.getElementById(id);const show=i.type==='password';i.type=show?'text':'password';btn.innerHTML=show?EYE_OPEN:EYE_CLOSED;btn.setAttribute('aria-label',show?'Ocultar senha':'Mostrar senha');}
 function renderLogin(mode='in'){AUTH_MODE=mode;const f=(id,label,type='text',extra='')=>`<div class="field"><label>${label}</label><input type="${type}" id="${id}" ${extra}></div>`;
   document.getElementById('main').innerHTML=`<div class="auth-wrap"><div class="auth-card"><img class="auth-logo" src="${LOGO_SRC()}" alt="GOAT"><p class="auth-sub">Teste A/B para páginas de captura, vendas e checkout</p>
   ${mode==='forgot'?`<h2 style="margin:0 0 6px">Recuperar senha</h2><div class="muted small" style="margin-bottom:14px">Enviamos um link para o seu e-mail. Ele abre o GOAT numa tela para definir a senha nova.</div>${f('lg-email','E-mail','email','autocomplete="email"')}<div class="err" id="lg-err"></div><button class="btn primary" onclick="doForgot()">Enviar link</button><div class="auth-links"><a href="#" onclick="event.preventDefault();renderLogin('in')">Voltar para o login</a><span></span></div>`
   :`<div class="auth-tabs"><button class="${mode==='in'?'on':''}" onclick="renderLogin('in')">Entrar</button><button class="${mode==='up'?'on':''}" onclick="renderLogin('up')">Criar conta</button></div>
-  ${mode==='up'?f('lg-name','Seu nome','text','autocomplete="name"')+`<div class="grid g2">`+f('lg-company','Empresa <span class="muted">(opcional)</span>','text','autocomplete="organization"')+f('lg-doc','CPF ou CNPJ','text','inputmode="numeric" placeholder="000.000.000-00" oninput="this.value=maskDoc(this.value)"')+`</div>`:''}
-  ${f('lg-email','E-mail','email','autocomplete="email"')}${f('lg-pass','Senha','password',`autocomplete="${mode==='in'?'current-password':'new-password'}" onkeydown="if(event.key==='Enter')doAuth('${mode}')"`)}
+  ${mode==='up'?f('lg-company','Nome da sua empresa','text','autocomplete="organization"')+f('lg-doc','CPF ou CNPJ','text','inputmode="numeric" placeholder="000.000.000-00" oninput="this.value=maskDoc(this.value)"'):''}
+  ${f('lg-email','E-mail','email','autocomplete="email"')}${pwField('lg-pass','Senha',`autocomplete="${mode==='in'?'current-password':'new-password'}" ${mode==='in'?`onkeydown="if(event.key==='Enter')doAuth('in')"`:''}`)}
+  ${mode==='up'?pwField('lg-pass2','Confirme a senha',`autocomplete="new-password" onkeydown="if(event.key==='Enter')doAuth('up')"`):''}
   <div class="err" id="lg-err"></div><button class="btn primary" onclick="doAuth('${mode}')">${mode==='in'?'Entrar':'Criar conta'}</button>
-  <div class="auth-links">${mode==='in'?`<a href="#" onclick="event.preventDefault();renderLogin('forgot')">Esqueci minha senha</a><a href="#" onclick="event.preventDefault();renderLogin('up')">Criar uma conta</a>`:`<span></span><a href="#" onclick="event.preventDefault();renderLogin('in')">Já tenho conta</a>`}</div>`}
+  ${mode==='in'?`<div class="auth-links" style="justify-content:center"><a href="#" onclick="event.preventDefault();renderLogin('forgot')">Esqueci minha senha</a></div>`:''}`}
   <div class="auth-foot">GOAT · ${new Date().getFullYear()}</div></div></div>`;}
 function onlyDigits(s){return String(s||'').replace(/\D/g,'');}
 function maskDoc(v){const d=onlyDigits(v).slice(0,14);if(d.length<=11)return d.replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d{1,2})$/,'$1-$2');return d.replace(/^(\d{2})(\d)/,'$1.$2').replace(/^(\d{2})\.(\d{3})(\d)/,'$1.$2.$3').replace(/\.(\d{3})(\d)/,'.$1/$2').replace(/(\d{4})(\d)/,'$1-$2');}
@@ -315,17 +323,17 @@ function validDoc(v){const d=onlyDigits(v);if(d.length===11){if(/^(\d)\1+$/.test
   if(d.length===14){if(/^(\d)\1+$/.test(d))return false;const c=(n)=>{const w=n===12?[5,4,3,2,9,8,7,6,5,4,3,2]:[6,5,4,3,2,9,8,7,6,5,4,3,2];let s=0;for(let i=0;i<n;i++)s+=d[i]*w[i];const r=s%11;return (r<2?0:11-r)===+d[n];};return c(12)&&c(13);}return false;}
 async function doAuth(mode){const email=document.getElementById('lg-email').value.trim(),password=document.getElementById('lg-pass').value;const err=document.getElementById('lg-err');err.textContent='';
   if(!email||!password){err.textContent='Preencha e-mail e senha.';return;}
-  if(mode==='up'){const name=document.getElementById('lg-name').value.trim(),company=document.getElementById('lg-company').value.trim(),doc=onlyDigits(document.getElementById('lg-doc').value);
-    if(!name){err.textContent='Informe seu nome.';return;}if(!validDoc(doc)){err.textContent='CPF ou CNPJ inválido.';return;}if(password.length<6){err.textContent='A senha precisa ter pelo menos 6 caracteres.';return;}
-    const r=await sb.auth.signUp({email,password,options:{data:{name,company,document:doc}}});if(r.error){err.textContent=r.error.message;return;}
+  if(mode==='up'){const company=document.getElementById('lg-company').value.trim(),doc=onlyDigits(document.getElementById('lg-doc').value),p2=document.getElementById('lg-pass2').value;
+    if(!company){err.textContent='Informe o nome da sua empresa.';return;}if(!validDoc(doc)){err.textContent='CPF ou CNPJ inválido.';return;}if(password.length<6){err.textContent='A senha precisa ter pelo menos 6 caracteres.';return;}if(password!==p2){err.textContent='As senhas não conferem.';return;}
+    const r=await sb.auth.signUp({email,password,options:{data:{name:company,company,document:doc}}});if(r.error){err.textContent=r.error.message;return;}
     if(!r.data.session){err.textContent='Conta criada. Confirme o e-mail que enviamos e depois entre.';return;}
-    USER=r.data.user;await sb.from('users').upsert({id:USER.id,email,name,company:company||null,document:doc});await boot();return;}
+    USER=r.data.user;await sb.from('users').upsert({id:USER.id,email,name:company,company,document:doc});await boot();return;}
   const r=await sb.auth.signInWithPassword({email,password});if(r.error){err.textContent=/invalid/i.test(r.error.message)?'E-mail ou senha incorretos.':r.error.message;return;}
   USER=r.data.user;await boot();}
 async function doForgot(){const email=document.getElementById('lg-email').value.trim();const err=document.getElementById('lg-err');if(!email){err.textContent='Informe o e-mail.';return;}
   const {error}=await sb.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname});if(error){err.textContent=error.message;return;}err.className='okmsg';err.textContent='Se esse e-mail tiver conta, o link chega em instantes.';}
 function renderRecovery(){document.body.classList.add('auth');document.getElementById('main').innerHTML=`<div class="auth-wrap"><div class="auth-card"><img class="auth-logo" src="${LOGO_SRC()}" alt="GOAT"><p class="auth-sub">Definir nova senha</p>
-  <div class="field"><label>Nova senha</label><input type="password" id="rc-pass" autocomplete="new-password"></div><div class="field"><label>Repita a senha</label><input type="password" id="rc-pass2" autocomplete="new-password"></div>
+  ${pwField('rc-pass','Nova senha','autocomplete="new-password"')}${pwField('rc-pass2','Repita a senha','autocomplete="new-password"')}
   <div class="err" id="rc-err"></div><button class="btn primary" onclick="doRecovery()">Salvar senha</button></div></div>`;}
 async function doRecovery(){const p=document.getElementById('rc-pass').value,p2=document.getElementById('rc-pass2').value;const err=document.getElementById('rc-err');if(p.length<6){err.textContent='Mínimo de 6 caracteres.';return;}if(p!==p2){err.textContent='As senhas não conferem.';return;}
   const {error}=await sb.auth.updateUser({password:p});if(error){err.textContent=error.message;return;}RECOVERY=false;toast('Senha alterada');const {data}=await sb.auth.getSession();USER=data?.session?.user||null;history.replaceState(null,'',location.pathname);USER?await boot():render();}
@@ -337,21 +345,22 @@ async function boot(){try{await loadAll();}catch(e){fail(e,'Erro ao carregar dad
 function renderAccount(m){const p=PROFILE;
   m.innerHTML=`<div class="topbar"><div><h1>Minha conta</h1><div class="muted">Os dados usados no cadastro.</div></div></div>
   <div class="grid g2" style="align-items:start"><div class="card"><h2 style="margin-bottom:12px">Dados</h2>
-    <div class="field"><label>Nome</label><input type="text" id="ac-name" value="${esc(p.name||'')}"></div>
-    <div class="field"><label>Empresa <span class="muted">(opcional)</span></label><input type="text" id="ac-company" value="${esc(p.company||'')}"></div>
+    <div class="field"><label>Nome da sua empresa</label><input type="text" id="ac-company" value="${esc(p.company||p.name||'')}"></div>
     <div class="field"><label>CPF ou CNPJ</label><input type="text" id="ac-doc" value="${esc(maskDoc(p.document||''))}" oninput="this.value=maskDoc(this.value)"></div>
     <div class="field"><label>E-mail</label><input type="email" value="${esc(USER.email||p.email||'')}" disabled><div class="help">Para trocar o e-mail, fale com o administrador.</div></div>
     <div class="row"><button class="btn primary" onclick="saveAccount()">Salvar</button><span class="err" id="ac-err" style="margin:0"></span></div></div>
-  <div class="card"><h2 style="margin-bottom:12px">Senha</h2>
-    <div class="field"><label>Nova senha</label><input type="password" id="ac-pass" autocomplete="new-password"></div><div class="field"><label>Repita a senha</label><input type="password" id="ac-pass2" autocomplete="new-password"></div>
-    <div class="row"><button class="btn" onclick="savePassword()">Alterar senha</button><span class="err" id="ac-perr" style="margin:0"></span></div>
+  <div class="card"><h2 style="margin-bottom:12px">Senha</h2><div class="muted small" style="margin-bottom:12px">A senha nunca é exibida. Para trocar, abra o formulário.</div>
+    <button class="btn" onclick="passwordModal()">Alterar senha</button>
     <h3 style="margin-top:22px">Acesso</h3><div class="small muted">${WSS.filter(w=>w.role!=='owner').length?'Você é colaborador em: '+WSS.filter(w=>w.role!=='owner').map(w=>esc(w.name||w.email)+' ('+(w.role==='admin'?'administrador':'editor')+')').join(', '):'Você é o usuário principal do seu espaço.'}</div></div></div>`;}
-async function saveAccount(){const name=document.getElementById('ac-name').value.trim(),company=document.getElementById('ac-company').value.trim(),doc=onlyDigits(document.getElementById('ac-doc').value);const err=document.getElementById('ac-err');err.textContent='';
-  if(!name){err.textContent='Informe seu nome.';return;}if(!validDoc(doc)){err.textContent='CPF ou CNPJ inválido.';return;}
-  const {error}=await sb.from('users').upsert({id:USER.id,email:USER.email,name,company:company||null,document:doc});if(error){err.textContent=error.message;return;}
-  await sb.auth.updateUser({data:{name,company,document:doc}});PROFILE={...PROFILE,name,company,document:doc};toast('Dados salvos');}
+async function saveAccount(){const company=document.getElementById('ac-company').value.trim(),doc=onlyDigits(document.getElementById('ac-doc').value);const err=document.getElementById('ac-err');err.textContent='';
+  if(!company){err.textContent='Informe o nome da sua empresa.';return;}if(!validDoc(doc)){err.textContent='CPF ou CNPJ inválido.';return;}
+  const {error}=await sb.from('users').upsert({id:USER.id,email:USER.email,name:company,company,document:doc});if(error){err.textContent=error.message;return;}
+  await sb.auth.updateUser({data:{name:company,company,document:doc}});PROFILE={...PROFILE,name:company,company,document:doc};toast('Dados salvos');}
+function passwordModal(){document.getElementById('modal').innerHTML=`<div class="modal-bg" onclick="if(event.target===this)closeModal()"><div class="modal" style="max-width:420px"><h2>Alterar senha</h2><div style="margin-top:12px">
+  ${pwField('ac-pass','Nova senha','autocomplete="new-password"')}${pwField('ac-pass2','Repita a nova senha','autocomplete="new-password"')}</div>
+  <div class="err" id="ac-perr"></div><div class="row" style="justify-content:flex-end;margin-top:14px"><button class="btn" onclick="closeModal()">Cancelar</button><button class="btn primary" onclick="savePassword()">Salvar senha</button></div></div></div>`;}
 async function savePassword(){const p=document.getElementById('ac-pass').value,p2=document.getElementById('ac-pass2').value;const err=document.getElementById('ac-perr');err.textContent='';if(p.length<6){err.textContent='Mínimo de 6 caracteres.';return;}if(p!==p2){err.textContent='As senhas não conferem.';return;}
-  const {error}=await sb.auth.updateUser({password:p});if(error){err.textContent=error.message;return;}document.getElementById('ac-pass').value='';document.getElementById('ac-pass2').value='';toast('Senha alterada');}
+  const {error}=await sb.auth.updateUser({password:p});if(error){err.textContent=error.message;return;}closeModal();toast('Senha alterada');}
 
 /* ===================== lista ===================== */
 function timeLine(e){const st=displayStatus(e);if(st==='scheduled')return'Começa em '+fmtD(e.start_at);const end=st==='finished'?(e.finished_at||now()):now();const days=Math.max(0,Math.floor((end-e.start_at)/DAY));return st==='finished'?`Durou ${days} dia${days===1?'':'s'}`:`Teste há ${days} dia${days===1?'':'s'}`;}
@@ -373,31 +382,33 @@ async function renderTeam(m){
   if(!isAdmin()){m.innerHTML='<div class="empty">Só o usuário principal e administradores gerenciam colaboradores.</div>';return;}
   const {data:members,error}=await sb.from('workspace_members').select('*').eq('owner_id',WS.owner_id).order('created_at');if(error)return fail(error);MEMBERS=members||[];
   m.innerHTML=`<div class="topbar"><div><h1>Colaboradores</h1><div class="muted">Quem pode entrar neste espaço de trabalho. A pessoa cria a própria conta com o e-mail convidado e já enxerga os testes liberados.</div></div><button class="btn primary" onclick="memberForm()">+ Convidar colaborador</button></div>
-  <div class="card" style="padding:0"><div class="tablewrap"><table><tr><th>E-mail</th><th>Papel</th><th>Testes</th><th></th></tr>
-    <tr><td>${esc(WS.email||'você')}</td><td>Usuário principal</td><td class="muted">todos</td><td></td></tr>
-    ${MEMBERS.map(x=>`<tr><td>${esc(x.email)}</td><td>${x.role==='admin'?'Administrador':'Editor'}</td><td class="small">${x.role==='admin'||x.scope==='all'?'todos':(x.experiment_ids||[]).length+' específico'+((x.experiment_ids||[]).length===1?'':'s')}</td>
+  <div class="card" style="padding:0"><div class="tablewrap"><table><tr><th>E-mail</th><th>Papel</th><th></th></tr>
+    <tr><td>${esc(WS.email||'você')}</td><td>Usuário principal</td><td></td></tr>
+    ${MEMBERS.map(x=>`<tr><td>${esc(x.email)}</td><td>${x.role==='admin'?'Administrador':'Editor'}</td>
       <td style="text-align:right;white-space:nowrap"><button class="btn sm" onclick="showPerms('${x.id}')">Ver permissões</button> <button class="btn sm" onclick="memberForm('${x.id}')">Editar</button> <button class="btn sm danger" onclick="removeMember('${x.id}')">Remover</button></td></tr>`).join('')}
-    ${!MEMBERS.length?'<tr><td colspan="4" class="muted">Nenhum colaborador ainda.</td></tr>':''}
+    ${!MEMBERS.length?'<tr><td colspan="3" class="muted">Nenhum colaborador ainda.</td></tr>':''}
   </table></div></div>`;
 }
 function showPerms(id){const x=MEMBERS.find(y=>y.id===id);const tests=S.experiments.filter(e=>!e.draft);
-  const list=x.role==='admin'?'<div>Acesso a tudo: testes, domínios, colaboradores e resultados.</div>':`<div class="kv" style="margin-top:6px">${PERMS.map(([k,l])=>`<b>${l}</b><span>${x.permissions&&x.permissions[k]?'<span class="okmsg" style="margin:0">Liberado</span>':'<span class="muted">Não</span>'}</span>`).join('')}<b>Ver resultados</b><span><span class="okmsg" style="margin:0">Liberado</span></span></div>`;
+  const has=k=>k==='view'?(x.permissions||{}).view!==false:!!(x.permissions||{})[k];
+  const list=x.role==='admin'?'<div>Acesso a tudo: testes, domínios, colaboradores e resultados.</div>':`<div class="kv" style="margin-top:6px">${PERMS.map(([k,l])=>`<b>${l}</b><span>${has(k)?'<span class="okmsg" style="margin:0">Liberado</span>':'<span class="muted">Não</span>'}</span>`).join('')}</div>`;
   const scope=x.role==='admin'||x.scope==='all'?'Todos os testes':(x.experiment_ids||[]).map(i=>{const e=tests.find(t=>t.id===i);return e?esc(e.name):null;}).filter(Boolean).join(', ')||'Nenhum teste liberado ainda';
   document.getElementById('modal').innerHTML=`<div class="modal-bg" onclick="if(event.target===this)closeModal()"><div class="modal"><h2>${esc(x.email)}</h2><div class="muted" style="margin:4px 0 12px">${x.role==='admin'?'Administrador':'Editor'}</div>${list}<h3 style="margin-top:14px">Testes que enxerga</h3><div class="small">${scope}</div><div class="row" style="justify-content:flex-end;margin-top:16px"><button class="btn primary" onclick="closeModal()">Fechar</button></div></div></div>`;}
-function memberForm(id){const x=id?MEMBERS.find(y=>y.id===id):{email:'',role:'editor',permissions:{create:true,edit:true},scope:'all',experiment_ids:[]};const tests=S.experiments.filter(e=>!e.draft);
+function memberForm(id){const x=id?MEMBERS.find(y=>y.id===id):{email:'',role:'editor',permissions:{view:true},scope:'all',experiment_ids:[]};const tests=S.experiments.filter(e=>!e.draft);
   document.getElementById('modal').innerHTML=`<div class="modal-bg" onclick="if(event.target===this)closeModal()"><div class="modal" style="max-width:560px"><h2>${id?'Editar colaborador':'Convidar colaborador'}</h2>
     <div class="grid g2" style="margin-top:12px"><div class="field"><label>E-mail</label><input type="email" id="tm-email" value="${esc(x.email)}" ${id?'disabled':''} placeholder="nome@empresa.com"></div>
     <div class="field"><label>Papel</label><select id="tm-role" onchange="document.getElementById('tm-editor').style.display=this.value==='editor'?'':'none'"><option value="admin" ${x.role==='admin'?'selected':''}>Administrador (acesso a tudo)</option><option value="editor" ${x.role==='editor'?'selected':''}>Editor (permissões específicas)</option></select></div></div>
-    <div id="tm-editor" style="${x.role==='editor'?'':'display:none'}"><h3>Permissões</h3>${PERMS.map(([k,l])=>`<label class="check"><input type="checkbox" id="tm-p-${k}" ${x.permissions&&x.permissions[k]?'checked':''}><span>${l}</span></label>`).join('')}<div class="help">Editores sempre podem ver os testes liberados e os resultados.</div>
+    <div id="tm-editor" style="${x.role==='editor'?'':'display:none'}"><h3>Permissões</h3>${PERMS.map(([k,l])=>`<label class="check"><input type="checkbox" id="tm-p-${k}" ${(k==='view'?(x.permissions||{}).view!==false:x.permissions&&x.permissions[k])?'checked':''} onchange="permDeps('${k}',this.checked)"><span>${l}</span></label>`).join('')}<div class="help">Todas as outras permissões dependem de "Ver os testes e resultados".</div>
       <h3 style="margin-top:14px">Quais testes</h3><label class="check"><input type="radio" name="tm-scope" value="all" ${x.scope!=='some'?'checked':''} onchange="document.getElementById('tm-tests').style.display='none'"><span>Todos os testes (inclusive os criados depois)</span></label>
       <label class="check"><input type="radio" name="tm-scope" value="some" ${x.scope==='some'?'checked':''} onchange="document.getElementById('tm-tests').style.display=''"><span>Apenas testes específicos</span></label>
       <div id="tm-tests" style="${x.scope==='some'?'':'display:none'};margin:6px 0 0 24px;max-height:180px;overflow:auto">${tests.length?tests.map(t=>`<label class="check"><input type="checkbox" class="tm-t" value="${t.id}" ${(x.experiment_ids||[]).includes(t.id)?'checked':''}><span>${esc(t.name)}</span></label>`).join(''):'<div class="muted small">Nenhum teste criado ainda.</div>'}</div></div>
     <div class="err" id="tm-err"></div><div class="row" style="justify-content:flex-end;margin-top:16px"><button class="btn" onclick="closeModal()">Cancelar</button><button class="btn primary" onclick="saveMember('${id||''}')">${id?'Salvar':'Convidar'}</button></div></div></div>`;}
+function permDeps(k,checked){if(k!=='view'&&checked)document.getElementById('tm-p-view').checked=true;if(k==='view'&&!checked)PERMS.forEach(([p])=>{if(p!=='view')document.getElementById('tm-p-'+p).checked=false;});}
 async function saveMember(id){const email=document.getElementById('tm-email').value.trim().toLowerCase(),role=document.getElementById('tm-role').value;const err=document.getElementById('tm-err');
   if(!id&&!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){err.textContent='Informe um e-mail válido.';return;}
   if(!id&&email===(WS.email||'').toLowerCase()){err.textContent='Esse é o e-mail do usuário principal.';return;}
   const permissions={};let scope='all',experiment_ids=[];
-  if(role==='editor'){PERMS.forEach(([k])=>permissions[k]=document.getElementById('tm-p-'+k).checked);scope=document.querySelector('input[name=tm-scope]:checked').value;experiment_ids=[...document.querySelectorAll('.tm-t:checked')].map(i=>i.value);}
+  if(role==='editor'){PERMS.forEach(([k])=>permissions[k]=document.getElementById('tm-p-'+k).checked);if(!Object.values(permissions).some(Boolean)){err.textContent='Marque pelo menos uma permissão.';return;}scope=document.querySelector('input[name=tm-scope]:checked').value;experiment_ids=[...document.querySelectorAll('.tm-t:checked')].map(i=>i.value);if(scope==='some'&&!experiment_ids.length){err.textContent='Escolha pelo menos um teste, ou libere todos.';return;}}
   const row={role,permissions,scope,experiment_ids};
   const r=id?await sb.from('workspace_members').update(row).eq('id',id):await sb.from('workspace_members').insert({owner_id:WS.owner_id,email,...row});
   if(r.error){err.textContent=String(r.error.code)==='23505'?'Esse e-mail já foi convidado.':r.error.message;return;}
@@ -601,10 +612,10 @@ function renderDashboard(m,id){
   m.innerHTML=`
   <div class="topbar"><div><div class="row" style="gap:10px"><h1>${esc(e.name)}</h1><span class="badge ${st}">${STATUS[st]}</span>${e.archived?'<span class="badge pending">arquivado</span>':''}</div><div class="muted" style="margin-top:2px">${TYPES[e.type]}</div>
     <div class="row" style="margin-top:8px;gap:8px"><span class="mono" style="word-break:break-all">${esc(link)}</span><button class="btn sm" onclick="copy('${esc(link)}')">Copiar link</button>${d&&d.status!=='connected'?`<span class="badge pending">domínio pendente · use o link provisório na aba Testar o link</span>`:''}</div></div>
-  <div class="row"><button class="btn" onclick="refreshDash('${e.id}')">Atualizar</button>${can('edit')?`<button class="btn" onclick="go('#/editar/${e.id}')">Editar teste</button>
-    ${st==='active'?`<button class="btn" onclick="pauseExp('${e.id}')">Pausar</button>`:''}${st==='paused'?`<button class="btn" onclick="resumeExp('${e.id}')">Retomar</button>`:''}
-    ${st!=='finished'?`<button class="btn danger" onclick="openFinish('${e.id}')">Encerrar teste</button>`:!winner?`<button class="btn primary" onclick="openFinish('${e.id}')">Escolher versão final</button>`:''}`:''}
-    <button class="btn" onclick="setTab('${e.id}','webhook')">Configurar webhooks</button></div></div>
+  <div class="row"><button class="btn tip" data-tip="Recarrega os números, os gráficos e os eventos deste teste" onclick="refreshDash('${e.id}')">Atualizar</button>
+    ${can('edit')?`<button class="btn tip" data-tip="Abre o assistente para mudar nome, URLs, distribuição, link, webhooks e regras" onclick="go('#/editar/${e.id}')">Editar teste</button>`:''}
+    ${can('status')&&st==='active'?`<button class="btn tip" data-tip="Para de distribuir novos visitantes. Quem já tem versão continua nela. Dá para retomar depois" onclick="pauseExp('${e.id}')">Pausar</button>`:''}${can('status')&&st==='paused'?`<button class="btn tip" data-tip="Volta a distribuir novos visitantes entre as versões" onclick="resumeExp('${e.id}')">Retomar</button>`:''}
+    ${can('finish')?(st!=='finished'?`<button class="btn danger tip" data-tip="Encerra o teste de vez e escolhe qual versão recebe 100% do tráfego daqui em diante" onclick="openFinish('${e.id}')">Encerrar teste</button>`:!winner?`<button class="btn primary tip" data-tip="Define qual versão recebe 100% do tráfego do link" onclick="openFinish('${e.id}')">Escolher versão final</button>`:''):''}</div></div>
   ${st==='finished'?`<div class="card" style="margin-bottom:14px;border-color:var(--line-strong)">${winner?`Teste encerrado em ${fmtD(e.finished_at)}. O link envia <strong>100% do tráfego</strong> para <span class="tag t${VCLASS(V.indexOf(winner))}">${LETTER(V.indexOf(winner))}</span> ${esc(winner.name)}.`:`Teste encerrado. Escolha qual versão continuará recebendo o tráfego — até lá, novos acessos vão para a versão A.`}</div>`:''}
   <div class="card"><div class="row" style="justify-content:space-between"><div><strong>${st==='scheduled'?'Começa em '+fmtDT(e.start_at):`Teste há ${elapsed} dia${elapsed===1?'':'s'}`}</strong>
     ${end&&st!=='finished'?` <span class="muted">· Faltam ${remaining} dia${remaining===1?'':'s'} · Término: ${fmtD(end)}</span>`:end?` <span class="muted">· Término: ${fmtD(end)}</span>`:` <span class="muted">· Sem data de término</span>`}</div><span class="muted small">Início ${fmtDT(e.start_at)}</span></div>
@@ -655,7 +666,7 @@ function tabConfig(e){const V=e.variants,r=computeResults(e),d=domainOf(e);
   <div class="card"><h2 style="margin-bottom:12px">Regras do teste</h2><div class="kv">
     <b>Tipo</b><span>${TYPES[e.type]}</span><b>Início</b><span>${fmtDT(e.start_at)}</span><b>Término</b><span>${e.end_at?fmtD(e.end_at):'Sem data de término'}</span>
     <b>Ao encerrar</b><span>${e.auto_winner?'Define a campeã automaticamente e manda 100% do tráfego para ela':'Escolha manual da versão final'}</span></div>
-    ${can('edit')?`<h3 style="margin-top:18px">Zerar métricas</h3><div class="help" style="margin:4px 0 8px">Apaga visitantes, cliques e eventos deste teste e recomeça a contagem do zero. As URLs, o split, os webhooks e as regras ficam como estão.</div>
+    ${can('reset')||can('edit')?`<h3 style="margin-top:18px">Zerar métricas</h3><div class="help" style="margin:4px 0 8px">Apaga visitantes, cliques e eventos deste teste e recomeça a contagem do zero. As URLs, o split, os webhooks e as regras ficam como estão.</div>
     <button class="btn danger sm" onclick="resetMetrics('${e.id}')">Zerar métricas do teste</button>`:''}
     <h3 style="margin-top:18px">Histórico do teste</h3><div class="small">${(e.history||[]).slice().reverse().map(h=>`<div class="row" style="justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--line)"><span>${esc(h.msg)}</span><span class="muted">${fmtDT(h.at)}</span></div>`).join('')}</div></div></div>`;}
 function tabWebhook(e,r){const V=e.variants;
