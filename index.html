@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>GOAT — Teste A/B para páginas</title>
+<link rel="icon" type="image/png" href="data:image/png;base64,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">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<style>
+:root{
+  --bg:#F3F4F6;--surface:#FFFFFF;--ink:#12161B;--muted:#6B7280;--line:#E5E7EB;--line-strong:#CBD0D8;
+  --a:#076AED;--a-soft:#DCE9FD;--b:#08BC84;--b-soft:#D6F5EA;--c:#6D28D9;--c-soft:#EBE3FB;
+  --ok:#0A8F65;--ok-soft:#D6F5EA;--warn:#B45309;--warn-soft:#FEF3C7;--danger:#B91C1C;
+  --radius:6px;--sans:"IBM Plex Sans",-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12161B;--surface:#1B2027;--ink:#EDEFF2;--muted:#9AA1AC;--line:#2C3037;--line-strong:#3D424B;
+  --a:#4D8DF5;--a-soft:#14294B;--b:#2ED3A0;--b-soft:#0F3B2E;--c:#A78BFA;--c-soft:#2A1E4A;
+  --ok:#2ED3A0;--ok-soft:#0F3B2E;--warn:#FCD34D;--warn-soft:#3A2E0B;--danger:#F87171;}}
+:root[data-theme="dark"]{
+  --bg:#12161B;--surface:#1B2027;--ink:#EDEFF2;--muted:#9AA1AC;--line:#2C3037;--line-strong:#3D424B;
+  --a:#4D8DF5;--a-soft:#14294B;--b:#2ED3A0;--b-soft:#0F3B2E;--c:#A78BFA;--c-soft:#2A1E4A;
+  --ok:#2ED3A0;--ok-soft:#0F3B2E;--warn:#FCD34D;--warn-soft:#3A2E0B;--danger:#F87171;}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.45;font-variant-numeric:tabular-nums}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+h1,h2,h3{margin:0;font-weight:600;letter-spacing:-.01em}
+h1{font-size:22px}h2{font-size:16px}h3{font-size:13px;color:var(--muted);font-weight:500}
+.app{display:grid;grid-template-columns:200px 1fr;min-height:100vh}
+.side{border-right:1px solid var(--line);background:var(--surface);padding:20px 14px;position:sticky;top:env(safe-area-inset-top,0px);height:100vh}
+.brand{padding:4px 8px 18px}
+.brand img{width:120px;height:auto;display:block;max-width:100%}
+.nav a{display:block;padding:8px 10px;border-radius:var(--radius);text-decoration:none;color:var(--muted);margin-bottom:2px}
+.nav a.on{background:var(--bg);color:var(--ink);font-weight:500}
+.main{padding:28px 36px 60px;max-width:1160px;width:100%}
+.topbar{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:22px;flex-wrap:wrap}
+.btn{border:1px solid var(--line-strong);background:var(--surface);border-radius:var(--radius);padding:7px 12px;cursor:pointer;font-weight:500;white-space:nowrap}
+.btn:hover{border-color:var(--ink)}
+.btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn.primary:hover{opacity:.9}
+.btn.danger{color:var(--danger)}
+.btn.sm{padding:4px 9px;font-size:12.5px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,.nav a:focus-visible,.tabs button:focus-visible{outline:2px solid var(--a);outline-offset:1px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:18px 20px}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.muted{color:var(--muted)}.small{font-size:12.5px}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px}
+.stat .v{font-size:26px;font-weight:600;letter-spacing:-.02em;line-height:1.1;margin-top:4px}
+.stat .d{margin-top:4px}
+.badge{display:inline-block;padding:2px 8px;border-radius:99px;font-size:12px;font-weight:500;background:var(--bg);color:var(--muted)}
+.badge.active{background:var(--ok-soft);color:var(--ok)}.badge.paused{background:var(--warn-soft);color:var(--warn)}
+.badge.scheduled{background:var(--c-soft);color:var(--c)}.badge.finished{background:var(--bg);color:var(--ink)}
+.badge.connected{background:var(--ok-soft);color:var(--ok)}.badge.pending{background:var(--warn-soft);color:var(--warn)}
+.tag{display:inline-block;padding:1px 7px;border-radius:4px;font-size:12px;font-weight:600}
+.tA{background:var(--a-soft);color:var(--a)}.tB{background:var(--b-soft);color:var(--b)}.tC{background:var(--c-soft);color:var(--c)}
+label{display:block;font-size:12.5px;font-weight:500;margin-bottom:5px}
+.field{margin-bottom:14px}
+input[type=text],input[type=url],input[type=number],input[type=date],input[type=datetime-local],select,textarea{width:100%;border:1px solid var(--line-strong);background:var(--surface);border-radius:var(--radius);padding:8px 10px}
+textarea{min-height:120px;resize:vertical}
+.help{font-size:12px;color:var(--muted);margin-top:5px}
+.err{font-size:12px;color:var(--danger);margin-top:5px}
+.okmsg{font-size:12px;color:var(--ok);margin-top:5px}
+.check{display:flex;gap:10px;align-items:flex-start;padding:12px;border:1px solid var(--line);border-radius:var(--radius);cursor:pointer}
+.check input{margin-top:3px}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:500;color:var(--muted);font-size:12.5px}
+td.n,th.n{text-align:right}
+.tablewrap{overflow-x:auto}
+.list a.item{display:grid;grid-template-columns:1fr auto;gap:14px;text-decoration:none;padding:16px 20px;background:var(--surface);border:1px solid var(--line);border-radius:8px;margin-bottom:10px}
+.list a.item:hover{border-color:var(--line-strong)}
+.split{height:10px;border-radius:99px;overflow:hidden;display:flex;background:var(--line)}
+.split span{display:block;height:100%}
+.progress{height:6px;background:var(--line);border-radius:99px;overflow:hidden}.progress i{display:block;height:100%;background:var(--ink)}
+.steps{display:flex;gap:4px;margin-bottom:20px;flex-wrap:wrap}
+.steps div{padding:6px 10px;border-radius:var(--radius);font-size:12.5px;color:var(--muted);border:1px solid transparent}
+.steps div.on{color:var(--ink);font-weight:500;background:var(--surface);border-color:var(--line)}
+.steps div.done{color:var(--ink)}
+.tabs{display:flex;gap:2px;flex-wrap:wrap;border-bottom:1px solid var(--line);margin:22px 0 18px;overflow:visible}
+.tabs button{border:0;background:none;padding:9px 14px;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap}
+.tabs button.on{color:var(--ink);font-weight:500;border-bottom-color:var(--ink)}
+.vs{display:grid;grid-template-columns:1fr 44px 1fr;gap:12px;align-items:stretch}
+.vs .mid{display:flex;align-items:center;justify-content:center;color:var(--muted);font-weight:600}
+.vcard{border-top:3px solid;padding-top:14px}
+.vcard.A{border-color:var(--a)}.vcard.B{border-color:var(--b)}.vcard.C{border-color:var(--c)}
+.vcard .big{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1;margin:6px 0 2px}
+.section{margin-top:26px}
+.section>h2{margin-bottom:10px}
+.chartbox{position:relative;height:220px}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;padding:16px;z-index:50}
+.modal{background:var(--surface);border-radius:10px;padding:22px;width:100%;max-width:560px;max-height:90vh;overflow:auto}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 14px;border-radius:var(--radius);font-size:13px;z-index:60;max-width:90vw}
+.kv{display:grid;grid-template-columns:170px 1fr;gap:6px 14px;font-size:13.5px}
+.kv b{font-weight:500;color:var(--muted)}
+.empty{padding:48px 20px;text-align:center;color:var(--muted);background:var(--surface);border:1px dashed var(--line-strong);border-radius:8px}
+.pill-list span{display:inline-block;padding:3px 8px;border:1px solid var(--line);border-radius:4px;margin:0 6px 6px 0}
+.note{background:var(--bg);border-radius:var(--radius);padding:10px 12px;font-size:12.5px}
+pre{white-space:pre-wrap;margin:0}
+@media (max-width:820px){
+  .app{grid-template-columns:1fr}
+  .side{position:static;height:auto;border-right:0;border-bottom:1px solid var(--line);padding:12px 14px;display:flex;align-items:center;gap:10px}
+  .brand{padding:0 8px 0 0}.brand img{width:70px}.nav{display:flex;gap:4px}
+  .main{padding:18px 16px 60px}
+  .g2,.g3,.g4{grid-template-columns:1fr 1fr}
+  .vs{grid-template-columns:1fr}.vs .mid{display:none}
+  .kv{grid-template-columns:1fr}
+}
+@media (max-width:520px){.g2,.g3,.g4{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:no-preference){.progress i,.split span{transition:width .25s}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand"><img src="data:image/png;base64,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" alt="GOAT"></div>
+    <nav class="nav">
+      <a href="#/testes" id="nav-testes">Testes</a>
+      <a href="#/dominios" id="nav-dominios">Domínios</a>
+      <a href="#/equipe" id="nav-equipe" style="display:none">Equipe</a>
+      <div id="ws-box"></div>
+      <a href="#" onclick="event.preventDefault();logout()" class="small" style="margin-top:14px">Sair</a>
+    </nav>
+  </aside>
+  <main class="main" id="main"></main>
+</div>
+<div id="modal"></div>
+<div id="toast"></div>
+
+<script>
+/* ===================== configuração =====================
+   Preencha com os dados do seu projeto Supabase (Project Settings → API).
+   Se deixar vazio, o painel pede esses dados na primeira abertura e guarda no navegador. */
+const SUPABASE_URL='https://yheiiacojiupcmttoqim.supabase.co';
+const SUPABASE_ANON_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InloZWlpYWNvaml1cGNtdHRvcWltIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxODk3MzQsImV4cCI6MjEwNTc2NTczNH0.NRoIvqtRtqJ2qnFDV0jcxa4HAxJBSe9vP48fSf-qBA8';
+const CNAME_TARGET='cname.vercel-dns.com';   // para onde o CNAME do cliente aponta (projeto Vercel que faz o redirect)
+
+/* ===================== cliente ===================== */
+const CFG=(()=>{try{return JSON.parse(localStorage.getItem('goat_cfg')||'null');}catch(e){return null;}})()||{};
+const SB_URL=(SUPABASE_URL.startsWith('http')?SUPABASE_URL:CFG.url||'').replace(/\/$/,'');
+const SB_KEY=SUPABASE_ANON_KEY.length>40?SUPABASE_ANON_KEY:(CFG.key||'');
+let sb=null;
+if(SB_URL&&SB_KEY&&window.supabase)sb=window.supabase.createClient(SB_URL,SB_KEY);
+let USER=null;let WSS=[];let WS=null;   // espaços de trabalho (o próprio + convites) e o espaço aberto
+const PERMS=[['create','Criar testes'],['edit','Editar, pausar, encerrar e zerar testes'],['delete','Excluir testes'],['domains','Gerenciar domínios']];
+function can(perm){if(!WS)return false;if(WS.role==='owner'||WS.role==='admin')return true;return !!(WS.permissions||{})[perm];}
+const isAdmin=()=>WS&&(WS.role==='owner'||WS.role==='admin');
+
+/* ===================== estado (cache do banco) ===================== */
+let S={domains:[],experiments:[]};   // configuração
+let R={};                            // agregados por teste: {per:{variant_id:{visitors,clicks,count,sum}},daily:{},events:[],unattributed,events_total}
+const uid=(p='')=>p+Math.random().toString(36).slice(2,10);
+const now=()=>Date.now();
+const DAY=86400000;
+const ms=s=>s?Date.parse(s):null;
+const iso=t=>new Date(t).toISOString();
+const TYPES={capture:'Página de captura',sales:'Página de vendas',checkout:'Página de checkout'};
+const STATUS={active:'Em andamento',paused:'Pausado',scheduled:'Agendado',finished:'Encerrado'};
+const AGG={count:'Contar eventos',sum:'Somar o campo de valor',avg:'Média do campo de valor (ticket médio)',rate:'Porcentagem de visitantes que geraram o evento'};
+const LETTER=i=>String.fromCharCode(65+i);
+const VCLASS=i=>['A','B','C'][Math.min(i,2)];
+
+/* ===================== utilidades ===================== */
+const fmtN=n=>Number(n||0).toLocaleString('pt-BR');
+const fmtP=n=>(Number(n||0)).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})+'%';
+const fmtR=n=>'R$'+Number(n||0).toLocaleString('pt-BR',{minimumFractionDigits:0,maximumFractionDigits:2});
+const fmtD=t=>new Date(t).toLocaleDateString('pt-BR');
+const fmtDT=t=>new Date(t).toLocaleString('pt-BR',{dateStyle:'short',timeStyle:'short'});
+const dayKey=t=>{const d=new Date(t);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');};
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function slugify(s){return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,60);}
+function slugFree(slug,domainId,ignoreId){return !S.experiments.some(e=>e.slug===slug&&(e.domain_id||'')===(domainId||'')&&e.id!==ignoreId);}
+function toast(m){const t=document.getElementById('toast');t.innerHTML=`<div class="toast">${esc(m)}</div>`;clearTimeout(t._t);t._t=setTimeout(()=>t.innerHTML='',3500);}
+function copy(text){navigator.clipboard?.writeText(text).then(()=>toast('Copiado'),()=>toast(text));}
+const domainOf=e=>S.domains.find(d=>d.id===e.domain_id);
+const defaultLink=slug=>SB_URL+'/functions/v1/redirect/'+slug;
+const linkOf=e=>{const d=domainOf(e);return d?'https://'+d.host+'/'+e.slug:defaultLink(e.slug);};
+/* Link provisório: passa pela função direto, sem depender do DNS do domínio. Útil para testar antes da propagação. */
+const tempLinkOf=e=>{const d=domainOf(e);return d?defaultLink(e.slug)+'?host='+encodeURIComponent(d.host):defaultLink(e.slug);};
+const webhookUrl=t=>SB_URL+'/functions/v1/webhook/'+t;
+function localDate(t){const d=new Date(t);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+function localISO(t){const d=new Date(t);d.setMinutes(d.getMinutes()-d.getTimezoneOffset());return d.toISOString().slice(0,16);}
+function fmtPrim(e,v){const a=e.metric.aggregation;return a==='sum'||a==='avg'?fmtR(v):a==='rate'?fmtP(v):fmtN(v);}
+function primLabel(e){const m=e.metric;return{count:'quantidade de eventos',sum:'valor total de '+m.value_field,avg:'ticket médio de '+m.value_field,rate:'% de visitantes com '+m.event_value}[m.aggregation]||'resultado';}
+function deepGet(o,k){if(o==null||typeof o!=='object')return undefined;if(k in o)return o[k];for(const v of Object.values(o)){const r=deepGet(v,k);if(r!==undefined)return r;}return undefined;}
+function flatKeys(o){if(o==null||typeof o!=='object'||Array.isArray(o))return[];return Object.entries(o).flatMap(([k,v])=>v&&typeof v==='object'&&!Array.isArray(v)?[...flatKeys(v)]:[k]);}
+function qualifies(m,p){return(!m.event_field||String(deepGet(p,m.event_field)??'')===String(m.event_value??''))&&(!m.status_field||String(deepGet(p,m.status_field)??'')===String(m.status_value??''));}
+function fail(err,ctx){console.error(ctx,err);toast((ctx?ctx+': ':'')+(err?.message||err));}
+
+/* ===================== carregamento ===================== */
+function mapExp(row){
+  const mc=(Array.isArray(row.metric_configurations)?row.metric_configurations[0]:row.metric_configurations)||{};
+  return{id:row.id,name:row.name,type:row.type,status:row.status,draft:!!row.draft,archived:!!row.archived,domain_id:row.domain_id||'',slug:row.slug,start_at:ms(row.start_at),end_at:ms(row.end_at),auto_winner:!!row.auto_winner,
+    winning_variant_id:row.winning_variant_id,webhook_token:row.webhook_token,created_at:ms(row.created_at),finished_at:ms(row.finished_at),
+    sample_payload:row.sample_payload||null,webhook_fields:row.webhook_fields||(row.sample_payload?flatKeys(row.sample_payload):[]),
+    metric:{event_field:mc.event_field||'',event_value:mc.event_value||'',status_field:mc.status_field||'',status_value:mc.status_value||'',value_field:mc.value_field||'',aggregation:mc.aggregation_type||'count',id_field:'ab_click_id'},
+    variants:(row.variants||[]).slice().sort((a,b)=>a.position-b.position).map(v=>({id:v.id,name:v.name,url:v.url,pct:Number(v.traffic_percentage),position:v.position})),
+    history:(row.experiment_history||[]).map(h=>({at:ms(h.created_at),msg:h.details?.msg||({created:'Teste criado',auto_finished:'Teste encerrado automaticamente na data de término',auto_winner:'Versão campeã definida automaticamente',webhook_received:'Webhook recebido',metrics_reset:'Métricas zeradas'})[h.action]||h.action})).sort((a,b)=>a.at-b.at)};
+}
+async function loadAll(){
+  const {data:ws}=await sb.rpc('my_workspaces');WSS=(ws||[]).map(w=>({owner_id:w.owner_id,email:w.owner_email,role:w.role,permissions:w.permissions||{}}));
+  const saved=localStorage.getItem('goat_ws');WS=WSS.find(w=>w.owner_id===saved)||WSS.find(w=>w.role==='owner')||WSS[0]||{owner_id:USER.id,email:'',role:'owner',permissions:{}};
+  const [d,e,vr]=await Promise.all([
+    sb.from('domains').select('*').order('created_at'),
+    sb.from('experiments').select('*,variants!experiment_id(*),metric_configurations(*),experiment_history(*)').order('created_at',{ascending:false}),
+    sb.from('variant_results').select('*')]);
+  if(d.error)throw d.error;if(e.error)throw e.error;if(vr.error)throw vr.error;
+  S.domains=d.data.filter(x=>x.user_id===WS.owner_id).map(x=>({id:x.id,host:x.host,status:x.status,verified_at:ms(x.verified_at),created_at:ms(x.created_at),last_check:x.last_check_message?('Última verificação '+fmtDT(ms(x.last_checked_at)||now())+': '+x.last_check_message):''}));
+  S.experiments=e.data.filter(x=>x.user_id===WS.owner_id).map(mapExp);
+  vr.data.forEach(r=>{const a=R[r.experiment_id]=R[r.experiment_id]||{per:{},daily:null,events:[],unattributed:0,events_total:0};a.per[r.variant_id]={visitors:Number(r.visitors),clicks:Number(r.clicks),count:Number(r.results),sum:Number(r.value)};});
+}
+async function loadExp(id){
+  const [vr,dh,ev,un,tot]=await Promise.all([
+    sb.from('variant_results').select('*').eq('experiment_id',id),
+    sb.from('daily_history').select('*').eq('experiment_id',id),
+    sb.from('webhook_events').select('*').eq('experiment_id',id).order('created_at',{ascending:false}).limit(50),
+    sb.from('webhook_events').select('id',{count:'exact',head:true}).eq('experiment_id',id).eq('attributed',false),
+    sb.from('webhook_events').select('id',{count:'exact',head:true}).eq('experiment_id',id)]);
+  const a=R[id]={per:{},daily:{},events:[],unattributed:un.count||0,events_total:tot.count||0};
+  (vr.data||[]).forEach(r=>a.per[r.variant_id]={visitors:Number(r.visitors),clicks:Number(r.clicks),count:Number(r.results),sum:Number(r.value)});
+  (dh.data||[]).forEach(r=>{const k=dayKey(ms(r.day));a.daily[k]=a.daily[k]||{};a.daily[k][r.variant_id]={visitors:Number(r.visitors),count:Number(r.results),sum:Number(r.value)};});
+  a.events=(ev.data||[]).map(x=>({...x,created_at:ms(x.created_at)}));
+}
+async function refreshExp(id){const e=S.experiments.find(x=>x.id===id);if(!e)return;
+  const {data}=await sb.from('experiments').select('*,variants!experiment_id(*),metric_configurations(*),experiment_history(*)').eq('id',id).maybeSingle();
+  if(data)S.experiments[S.experiments.indexOf(e)]=mapExp(data);await loadExp(id);}
+
+/* ===================== regras do experimento (só leitura; a lógica de distribuição roda no servidor) ===================== */
+function displayStatus(e){if(e.status==='finished')return'finished';if(e.status==='paused')return'paused';if(e.start_at>now())return'scheduled';return'active';}
+function endAt(e){return e.end_at||null;}
+async function hist(e,msg){await sb.from('experiment_history').insert({experiment_id:e.id,action:'note',details:{msg}});}
+function computeResults(e){
+  const a=R[e.id]||{per:{},unattributed:0,events_total:0};const m=e.metric;const per={};
+  e.variants.forEach(v=>{const x=a.per[v.id]||{visitors:0,clicks:0,count:0,sum:0};per[v.id]={...x};});
+  const tv=e.variants.reduce((s,v)=>s+per[v.id].visitors,0),cl=e.variants.reduce((s,v)=>s+per[v.id].clicks,0);
+  e.variants.forEach(v=>{const p=per[v.id];p.share=tv?p.visitors/tv*100:0;p.conv=p.visitors?p.count/p.visitors*100:0;p.avg=p.count?p.sum/p.count:0;p.primary={count:p.count,sum:p.sum,avg:p.avg,rate:p.conv}[m.aggregation]??p.count;});
+  return{per,visitors:tv,clicks:cl,unattributed:a.unattributed,events:a.events_total};
+}
+function dailySeries(e){const a=R[e.id]||{};const src=a.daily||{};const days={};
+  Object.keys(src).sort().forEach(k=>{days[k]={};e.variants.forEach(v=>days[k][v.id]=src[k][v.id]||{visitors:0,count:0,sum:0});});
+  return{keys:Object.keys(days),days};}
+
+/* ===================== roteamento ===================== */
+window.addEventListener('hashchange',()=>{const h=location.hash;if(W&&!W.exp_id&&h!=='#/novo'&&!h.startsWith('#/editar/'))W=null;render();});
+function go(h){location.hash=h;}
+function render(){
+  if(!sb)return renderSetup();if(!USER)return renderLogin();
+  const h=location.hash||'#/testes';
+  document.getElementById('nav-testes').classList.toggle('on',!h.startsWith('#/dominios'));
+  document.getElementById('nav-dominios').classList.toggle('on',h.startsWith('#/dominios'));
+  const ne=document.getElementById('nav-equipe');ne.style.display=isAdmin()?'':'none';ne.classList.toggle('on',h.startsWith('#/equipe'));
+  const wsel=document.getElementById('ws-box');if(wsel)wsel.innerHTML=WSS.length>1?`<div class="small muted" style="padding:8px 10px 2px">Espaço</div><select style="width:100%;font-size:13px" onchange="switchWs(this.value)">${WSS.map(w=>`<option value="${w.owner_id}" ${WS&&WS.owner_id===w.owner_id?'selected':''}>${esc(w.role==='owner'?'Meu espaço':w.email)}</option>`).join('')}</select>`:'';
+  const m=document.getElementById('main');
+  if(h==='#/novo')return renderWizard(m,null);
+  if(h.startsWith('#/editar/'))return renderWizard(m,h.split('/')[2]);
+  if(h.startsWith('#/teste/'))return renderDashboard(m,h.split('/')[2]);
+  if(h.startsWith('#/dominios'))return renderDomains(m);
+  if(h.startsWith('#/equipe'))return renderTeam(m);
+  return renderList(m);
+}
+/* atualização automática do dashboard aberto */
+setInterval(async()=>{if(!sb||!USER)return;const h=location.hash;if(!h.startsWith('#/teste/'))return;const id=h.split('/')[2];
+  try{await refreshExp(id);const y=window.scrollY;render();window.scrollTo(0,y);}catch(e){}},15000);
+
+/* ===================== configuração inicial e login ===================== */
+function renderSetup(){document.getElementById('main').innerHTML=`<div class="card" style="max-width:560px;margin:40px auto"><h1 style="margin-bottom:6px">Conectar ao Supabase</h1><div class="muted" style="margin-bottom:16px">Cole a URL do projeto e a chave pública (anon key). Estão em Project Settings → API.</div>
+  <div class="field"><label>Project URL</label><input type="url" id="cfg-url" placeholder="https://xxxx.supabase.co" value="${esc(CFG.url||'')}"></div>
+  <div class="field"><label>anon public key</label><input type="text" id="cfg-key" class="mono" placeholder="eyJhbGci..." value="${esc(CFG.key||'')}"></div>
+  <button class="btn primary" onclick="saveCfg()">Conectar</button></div>`;}
+function saveCfg(){let url=document.getElementById('cfg-url').value.trim(),key=document.getElementById('cfg-key').value.trim();try{url=new URL(url).origin;}catch(e){url='';}if(!/^https:\/\/[a-z0-9-]+\.supabase\.co$/.test(url)){toast('A URL precisa ser como https://xxxx.supabase.co');return;}if(key.length<40){toast('Confira a chave.');return;}localStorage.setItem('goat_cfg',JSON.stringify({url,key}));location.reload();}
+function renderLogin(mode='in'){document.getElementById('main').innerHTML=`<div class="card" style="max-width:420px;margin:40px auto"><h1 style="margin-bottom:6px">${mode==='in'?'Entrar':'Criar conta'}</h1><div class="muted" style="margin-bottom:16px">GOAT — testes A/B</div>
+  <div class="field"><label>E-mail</label><input type="email" id="lg-email" autocomplete="email"></div>
+  <div class="field"><label>Senha</label><input type="password" id="lg-pass" autocomplete="current-password" onkeydown="if(event.key==='Enter')doAuth('${mode}')"></div>
+  <div class="err" id="lg-err"></div>
+  <div class="row" style="margin-top:14px;justify-content:space-between"><button class="btn primary" onclick="doAuth('${mode}')">${mode==='in'?'Entrar':'Criar conta'}</button><a href="#" onclick="event.preventDefault();renderLogin('${mode==='in'?'up':'in'}')" class="small">${mode==='in'?'Criar uma conta':'Já tenho conta'}</a></div>
+  <div class="help" style="margin-top:14px">Conectado a <span class="mono">${esc(SB_URL)}</span> · <a href="#" onclick="event.preventDefault();localStorage.removeItem('goat_cfg');location.reload()">Alterar conexão</a></div></div>`;}
+async function doAuth(mode){const email=document.getElementById('lg-email').value.trim(),password=document.getElementById('lg-pass').value;const err=document.getElementById('lg-err');err.textContent='';
+  const r=mode==='in'?await sb.auth.signInWithPassword({email,password}):await sb.auth.signUp({email,password});
+  if(r.error){err.textContent=r.error.message;return;}
+  if(mode==='up'&&!r.data.session){err.textContent='Conta criada. Confirme o e-mail (ou desative a confirmação em Authentication → Providers → Email) e entre.';return;}
+  USER=r.data.user;await boot();}
+function switchWs(id){localStorage.setItem('goat_ws',id);LOADED={};boot();}
+async function logout(){await sb.auth.signOut();USER=null;S={domains:[],experiments:[]};R={};render();}
+async function boot(){try{await loadAll();}catch(e){fail(e,'Erro ao carregar dados');}render();}
+
+/* ===================== lista ===================== */
+function timeLine(e){const st=displayStatus(e);if(st==='scheduled')return'Começa em '+fmtD(e.start_at);const end=st==='finished'?(e.finished_at||now()):now();const days=Math.max(0,Math.floor((end-e.start_at)/DAY));return st==='finished'?`Durou ${days} dia${days===1?'':'s'}`:`Teste há ${days} dia${days===1?'':'s'}`;}
+let SHOW_ARCHIVED=false;
+function renderList(m){
+  const list=S.experiments.filter(e=>!e.draft&&!!e.archived===SHOW_ARCHIVED).slice().sort((a,b)=>b.created_at-a.created_at);const nArch=S.experiments.filter(e=>!e.draft&&e.archived).length;
+  m.innerHTML=`<div class="topbar"><div><h1>${SHOW_ARCHIVED?'Testes arquivados':'Testes'}</h1><div class="muted">Páginas de captura, vendas e checkout comparadas pelo mesmo link.</div></div><div class="row"><button class="btn" onclick="boot()">Atualizar</button>${nArch||SHOW_ARCHIVED?`<button class="btn" onclick="SHOW_ARCHIVED=!SHOW_ARCHIVED;render()">${SHOW_ARCHIVED?'Ver ativos':'Arquivados ('+nArch+')'}</button>`:''}${can('create')?`<button class="btn primary" onclick="go('#/novo')">+ Novo teste</button>`:''}</div></div>
+  ${list.length?`<div class="list">${list.map(e=>{const st=displayStatus(e);const r=computeResults(e);return`<a class="item" href="#/teste/${e.id}"><div><div class="row" style="gap:8px"><strong>${esc(e.name)}</strong><span class="badge ${st}">${STATUS[st]}</span>${e.archived?'<span class="badge pending">arquivado</span>':''}</div>
+    <div class="muted small">${TYPES[e.type]} · <span class="mono">${esc(linkOf(e).replace('https://',''))}</span></div>
+    <div class="split" style="margin-top:10px;max-width:320px">${e.variants.map((v,i)=>`<span style="width:${v.pct}%;background:var(--${VCLASS(i).toLowerCase()})"></span>`).join('')}</div></div>
+    <div style="text-align:right"><div class="muted small">Visitantes</div><div style="font-size:20px;font-weight:600">${fmtN(r.visitors)}</div><div class="muted small">${timeLine(e)}</div></div></a>`;}).join('')}</div>`
+  :SHOW_ARCHIVED?`<div class="empty">Nenhum teste arquivado.</div>`:`<div class="empty">Nenhum teste ainda. ${can('create')?`Crie o primeiro: cole duas URLs, gere o link e mande tráfego.<br><br><button class="btn primary" onclick="go('#/novo')">+ Novo teste</button>`:'Peça a um administrador para criar o primeiro teste ou liberar essa permissão para você.'}</div>`}`;
+}
+
+/* ===================== equipe ===================== */
+async function renderTeam(m){
+  if(!isAdmin()){m.innerHTML='<div class="empty">Só o usuário principal e administradores gerenciam a equipe.</div>';return;}
+  const {data:members,error}=await sb.from('workspace_members').select('*').eq('owner_id',WS.owner_id).order('created_at');if(error)return fail(error);
+  m.innerHTML=`<div class="topbar"><div><h1>Equipe</h1><div class="muted">Quem pode entrar neste espaço de trabalho. A pessoa cria a própria conta com o e-mail convidado e já enxerga os testes.</div></div></div>
+  <div class="card" style="max-width:640px"><h2 style="margin-bottom:12px">Convidar pessoa</h2>
+    <div class="grid g2"><div class="field"><label>E-mail</label><input type="email" id="tm-email" placeholder="nome@empresa.com"></div>
+    <div class="field"><label>Papel</label><select id="tm-role" onchange="document.getElementById('tm-perms').style.display=this.value==='editor'?'':'none'"><option value="admin">Administrador (acesso a tudo)</option><option value="editor">Editor (permissões específicas)</option></select></div></div>
+    <div id="tm-perms" style="display:none;margin-bottom:12px">${PERMS.map(([k,l])=>`<label class="check"><input type="checkbox" id="tm-p-${k}" ${k==='create'||k==='edit'?'checked':''}><span>${l}</span></label>`).join('')}<div class="help">Editores sempre podem ver os testes e os resultados.</div></div>
+    <div class="row"><button class="btn primary" onclick="addMember()">Convidar</button><span class="err" id="tm-err" style="margin:0"></span></div></div>
+  <div class="section"><h2>Pessoas com acesso</h2><div class="card" style="padding:0"><div class="tablewrap"><table><tr><th>E-mail</th><th>Papel</th><th>Permissões</th><th></th></tr>
+    <tr><td>${esc(WS.email||'você')}</td><td>Usuário principal</td><td class="muted">tudo</td><td></td></tr>
+    ${(members||[]).map(x=>`<tr><td>${esc(x.email)}</td><td>${x.role==='admin'?'Administrador':'Editor'}</td><td class="small">${x.role==='admin'?'<span class="muted">tudo</span>':PERMS.filter(([k])=>x.permissions&&x.permissions[k]).map(([k,l])=>l).join(' · ')||'<span class="muted">só visualizar</span>'}</td><td style="text-align:right"><button class="btn sm danger" onclick="removeMember('${x.id}')">Remover</button></td></tr>`).join('')}
+  </table></div></div></div>`;
+}
+async function addMember(){const email=document.getElementById('tm-email').value.trim().toLowerCase(),role=document.getElementById('tm-role').value;const err=document.getElementById('tm-err');
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){err.textContent='Informe um e-mail válido.';return;}
+  const permissions={};if(role==='editor')PERMS.forEach(([k])=>permissions[k]=document.getElementById('tm-p-'+k).checked);
+  const {error}=await sb.from('workspace_members').insert({owner_id:WS.owner_id,email,role,permissions});if(error){err.textContent=String(error.code)==='23505'?'Esse e-mail já foi convidado.':error.message;return;}
+  toast('Convite registrado. Peça para a pessoa criar a conta com esse e-mail.');renderTeam(document.getElementById('main'));}
+async function removeMember(id){if(!confirm('Remover o acesso desta pessoa?'))return;const {error}=await sb.from('workspace_members').delete().eq('id',id);if(error)return fail(error);renderTeam(document.getElementById('main'));}
+
+/* ===================== domínios ===================== */
+function renderDomains(m){
+  m.innerHTML=`<div class="topbar"><div><h1>Domínios</h1><div class="muted">Opcional: sem domínio próprio, os testes usam o link padrão do GOAT. Cada domínio aceita vários testes.</div></div></div>
+  ${can('domains')?`<div class="card" style="max-width:560px"><h2 style="margin-bottom:12px">Adicionar domínio</h2>
+    <div class="field"><label>Domínio</label><input type="text" id="dom-host" placeholder="testes.meudominio.com" onkeydown="if(event.key==='Enter')addDomain()"><div class="err" id="dom-err"></div></div>
+    <button class="btn primary" onclick="addDomain()">Adicionar domínio</button></div>`:''}
+  <div class="section"><h2>Domínios do espaço</h2>
+  ${S.domains.length?`<div class="card" style="padding:0"><div class="tablewrap"><table><tr><th>Domínio</th><th>Status</th><th>Testes</th><th></th></tr>
+   ${S.domains.map(d=>`<tr><td class="mono">${esc(d.host)}${d.last_check?`<div class="small muted" style="font-family:var(--sans)">${esc(d.last_check)}</div>`:''}</td><td><span class="badge ${d.status}">${d.status==='connected'?'Domínio conectado':'Configuração pendente'}</span></td>
+   <td>${S.experiments.filter(e=>e.domain_id===d.id&&!e.draft).length}</td><td style="text-align:right;white-space:nowrap">${d.status==='pending'?`<button class="btn sm" onclick="openDns('${d.id}')">Ver instruções</button> ${can('domains')?`<button class="btn sm" id="vd-${d.id}" onclick="verifyDomain('${d.id}')">Verificar DNS</button>`:''}`:''} ${can('domains')?`<button class="btn sm danger" onclick="removeDomain('${d.id}')">Remover</button>`:''}</td></tr>`).join('')}
+  </table></div></div>`:`<div class="empty">Nenhum domínio cadastrado.</div>`}</div>`;
+}
+function dnsTable(host){const sub=host.split('.').slice(0,-2).join('.')||'@';return`<div class="tablewrap"><table><tr><th>Tipo</th><th>Nome</th><th>Valor</th><th>TTL</th></tr><tr><td class="mono">CNAME</td><td class="mono">${esc(sub)}</td><td class="mono">${CNAME_TARGET}</td><td class="mono">3600</td></tr></table></div>`;}
+function addDomain(){
+  const host=document.getElementById('dom-host').value.trim().toLowerCase().replace(/^https?:\/\//,'').replace(/\/.*$/,'');const err=document.getElementById('dom-err');
+  if(!/^([a-z0-9-]+\.)+[a-z]{2,}$/.test(host)){err.textContent='Informe um domínio válido, como testes.meudominio.com.';return;}
+  if(S.domains.some(d=>d.host===host)){err.textContent='Esse domínio já está cadastrado.';return;}
+  err.textContent='';
+  document.getElementById('modal').innerHTML=`<div class="modal-bg"><div class="modal"><h2>Aponte o DNS de ${esc(host)}</h2>
+    <div class="muted" style="margin:6px 0 14px">No painel do seu provedor (Registro.br, Cloudflare, GoDaddy, Hostinger…), crie este registro:</div>${dnsTable(host)}
+    <div class="help" style="margin-top:10px">Use só o subdomínio no campo Nome. A propagação leva de alguns minutos a 24 h. Depois de salvar aqui, clique em Verificar DNS: o domínio só fica conectado quando o CNAME for encontrado de verdade.</div>
+    <div class="row" style="justify-content:flex-end;margin-top:16px"><button class="btn" onclick="closeModal()">Cancelar</button><button class="btn primary" onclick="confirmDomain('${esc(host)}')">Já fiz isso</button></div></div></div>`;
+}
+async function confirmDomain(host){const {error}=await sb.from('domains').insert({user_id:WS.owner_id,host});if(error)return fail(error,'Não foi possível salvar');closeModal();toast('Domínio salvo. Clique em Verificar DNS quando a propagação terminar.');await boot();}
+function openDns(id){const d=S.domains.find(x=>x.id===id);document.getElementById('modal').innerHTML=`<div class="modal-bg" onclick="if(event.target===this)closeModal()"><div class="modal"><h2>Aponte o DNS de ${esc(d.host)}</h2><div style="margin:12px 0">${dnsTable(d.host)}</div><div class="row" style="justify-content:flex-end"><button class="btn primary" onclick="closeModal()">Fechar</button></div></div></div>`;}
+/* Verificação real, no servidor: a função consulta o CNAME e só marca conectado se o apontamento existir */
+async function verifyDomain(id){const btn=document.getElementById('vd-'+id);if(btn){btn.disabled=true;btn.textContent='Verificando…';}
+  const {data,error}=await sb.functions.invoke('verify-domain',{body:{domain_id:id}});
+  if(error)fail(error,'Verificação falhou');else toast(data?.connected?'CNAME encontrado: domínio conectado':(data?.message||'Ainda pendente'));
+  await boot();}
+async function removeDomain(id){if(S.experiments.some(e=>e.domain_id===id)){toast('Há testes usando esse domínio. Remova os testes primeiro.');return;}if(!confirm('Remover este domínio?'))return;const {error}=await sb.from('domains').delete().eq('id',id);if(error)return fail(error);await boot();}
+
+/* ===================== wizard ===================== */
+let W=null;
+const STEPS=['Informações','URLs e distribuição','Link','Webhook','Métrica','Finalizar'];
+function newWizard(ex){
+  if(ex)return{edit:ex.id,exp_id:ex.id,step:0,name:ex.name,type:ex.type,startMode:'date',start:ex.start_at,origStart:ex.start_at,end:ex.end_at||null,auto_winner:!!ex.auto_winner,variants:ex.variants.map(v=>({...v})),domain_id:ex.domain_id,slug:ex.slug,slugTouched:true,webhook_token:ex.webhook_token,test_payload:ex.sample_payload||null,fields:ex.webhook_fields||[],metric:{...ex.metric}};
+  return{edit:null,exp_id:null,step:0,name:'',type:'',startMode:'now',start:now(),end:null,auto_winner:false,variants:[{id:uid('new_'),name:'',url:'',pct:50},{id:uid('new_'),name:'',url:'',pct:50}],
+    domain_id:'',slug:'',slugTouched:false,webhook_token:null,test_payload:null,fields:[],
+    metric:{event_field:'',event_value:'',status_field:'',status_value:'',value_field:'',aggregation:'count',id_field:'ab_click_id'}};
+}
+function renderWizard(m,editId){
+  const ex=editId?S.experiments.find(e=>e.id===editId):null;
+  if(!W||W.edit!==(editId||null))W=newWizard(ex);
+  if(W.domain_id&&!S.domains.some(d=>d.id===W.domain_id))W.domain_id='';
+  const s=W.step;
+  m.innerHTML=`<div class="topbar"><div><h1>${ex?'Editar teste':'Novo teste'}</h1></div><button class="btn" onclick="wizCancel()">Cancelar</button></div>
+  <div class="steps">${STEPS.map((t,i)=>`<div class="${i===s?'on':i<s?'done':''}">${i+1}. ${t}</div>`).join('')}</div>
+  <div class="card" style="max-width:720px">${stepHTML(s,ex)}<div class="err" id="w-err" style="margin-top:8px"></div>
+  <div class="row" style="margin-top:20px;justify-content:space-between"><button class="btn" ${s===0?'disabled':''} onclick="wizPrev()">Voltar</button>
+    ${s<5?`<button class="btn primary" id="w-next" ${s===3&&!W.test_payload?'disabled':''} onclick="wizNext()">Continuar</button>`:`<button class="btn primary" id="w-finish" onclick="wizFinish()">${ex?'Salvar alterações':'Criar teste'}</button>`}</div></div>`;
+  if(s===1)updateSplitBar();if(s===2)updateSlugPreview();if(s===4)metricPreview();
+}
+async function wizCancel(){const w=W;W=null;if(w&&!w.edit&&w.exp_id){await sb.from('experiments').delete().eq('id',w.exp_id);await boot();}go(w&&w.edit?'#/teste/'+w.edit:'#/testes');}
+function stepHTML(s,ex){
+  const w=W;
+  if(s===0)return`
+    <div class="field"><label>Nome do teste</label><input type="text" value="${esc(w.name)}" placeholder="Checkout Greenn x Hotmart" oninput="W.name=this.value"></div>
+    <div class="field"><label>O que você quer testar?</label><select onchange="W.type=this.value"><option value="">Selecione</option>${Object.entries(TYPES).map(([k,v])=>`<option value="${k}" ${w.type===k?'selected':''}>${v}</option>`).join('')}</select></div>
+    <div class="grid g2"><div class="field"><label>Data de início</label>
+      <select onchange="W.startMode=this.value;renderWizard(document.getElementById('main'),W.edit)"><option value="now" ${w.startMode==='now'?'selected':''}>Iniciar agora</option><option value="date" ${w.startMode==='date'?'selected':''}>Escolher uma data</option></select>
+      ${w.startMode==='date'?`<input type="datetime-local" style="margin-top:6px" min="${localISO(now())}" value="${localISO(w.start)}" onchange="W.start=new Date(this.value).getTime()"><div class="help">A data de início não pode ser no passado.</div>`:''}</div>
+    <div class="field"><label>Data de término (opcional)</label><input type="date" value="${w.end?localDate(w.end):''}" min="${localDate(now())}" onchange="W.end=this.value?new Date(this.value+'T23:59:59').getTime():null;renderWizard(document.getElementById('main'),W.edit)">
+      <div class="help">Deixe em branco para o teste rodar sem data de término. Com data, ele encerra sozinho às 23:59 desse dia.</div></div></div>
+    ${w.end?`<label class="check"><input type="checkbox" ${w.auto_winner?'checked':''} onchange="W.auto_winner=this.checked"><span>O teste deve definir qual é a versão campeã e direcionar 100% do tráfego para ela após o encerramento do período de teste.<div class="help">A campeã é a versão com melhor resultado na métrica principal (desempate pela conversão). Sem essa opção, ao encerrar você escolhe a versão manualmente.</div></span></label>`:''}`;
+  if(s===1)return`<div id="w-vars">${w.variants.map((v,i)=>varHTML(v,i)).join('')}</div>
+    <div class="row" style="margin-bottom:16px"><button class="btn" onclick="W.variants.push({id:uid('new_'),name:'',url:'',pct:0});equalize();renderWizard(document.getElementById('main'),W.edit)">+ Adicionar versão</button><button class="btn" onclick="equalize();renderWizard(document.getElementById('main'),W.edit)">Dividir por igual</button></div>
+    <h3>Distribuição do tráfego</h3><div class="help" style="margin:2px 0 8px">A soma precisa dar 100%. Com duas versões o padrão é 50/50.</div>
+    <div class="split" id="w-split"></div><div class="row" id="w-split-lbl" style="margin-top:8px;justify-content:space-between"></div>`;
+  if(s===2){const conn=S.domains;return`
+    <div class="field"><label>Domínio do link</label><select onchange="W.domain_id=this.value;updateSlugPreview()"><option value="" ${!w.domain_id?'selected':''}>Link padrão do GOAT (sem domínio próprio)</option>${conn.map(d=>`<option value="${d.id}" ${w.domain_id===d.id?'selected':''}>${esc(d.host)}${d.status==='pending'?' (configuração pendente)':''}</option>`).join('')}</select>
+    <div class="help">O link padrão funciona na hora. Um domínio próprio deixa o link com a sua cara (ex.: link.suaempresa.com/slug) e precisa de configuração de DNS na aba <a href="#/dominios">Domínios</a>.</div></div>
+    <div class="field"><label>Slug</label><input type="text" id="w-slug" class="mono" value="${esc(w.slug||slugify(w.name))}" oninput="W.slugTouched=true;this.value=slugify(this.value.replace(/\\s/g,'-'))+(this.value.endsWith('-')?'-':'');W.slug=slugify(this.value);updateSlugPreview()">
+      <div id="w-slug-msg"></div><div class="help">Só letras, números e hífens. Espaços viram hífens. Cada slug é único por domínio.</div></div>
+    <div class="note"><div class="muted small">Seu link será:</div><div class="mono" id="w-preview" style="font-size:14px;margin-top:3px"></div></div>`;}
+  if(s===3)return`
+    <h3>${w.type==='capture'?'Webhook da ferramenta de captura':'Webhook do gateway de pagamento'}</h3>
+    <div class="help" style="margin:2px 0 10px">Cada teste tem o seu próprio endereço. ${w.type==='capture'?'Configure-o na ferramenta que recebe os leads (formulário, página de captura, CRM).':'Configure-o no gateway ou na plataforma que aprova as vendas (Greenn, Hotmart, outra).'}</div>
+    ${w.webhook_token?`<div class="row" style="margin:6px 0 14px"><span class="mono" style="word-break:break-all">${webhookUrl(w.webhook_token)}</span><button class="btn sm" onclick="copy('${webhookUrl(w.webhook_token)}')">Copiar</button></div>`:`<div class="muted" style="margin:6px 0 14px">Gerando endereço…</div>`}
+    ${w.test_payload?`<div class="note" style="border-left:3px solid var(--ok)"><strong>Carga de teste recebida</strong> — ${w.fields.length} campos: <span class="mono">${w.fields.map(esc).join(', ')}</span></div>`
+      :`<ol style="margin:0 0 14px;padding-left:18px"><li>Cole esse endereço como webhook na plataforma.</li><li>Envie um evento de teste por lá${w.type==='capture'?' (um cadastro de teste)':' (ou aprove uma compra de teste)'}.</li><li>Quando ele chegar aqui, a próxima etapa libera para você definir as regras.</li></ol>
+       <div class="note" style="border-left:3px solid var(--warn)"><strong>Aguardando a carga de teste…</strong> Esta tela consulta o servidor a cada 2 segundos. O botão Continuar só libera quando um evento chegar de fato.</div>`}`;
+  if(s===4){const mt=w.metric,F=w.fields,P=w.test_payload||{};const sel=(k,label,help)=>`<div class="field"><label>${label}</label><select class="mono" onchange="W.metric.${k}=this.value;renderWizard(document.getElementById('main'),W.edit)"><option value="">—</option>${F.map(f=>`<option ${mt[k]===f?'selected':''}>${esc(f)}</option>`).join('')}</select>${help?`<div class="help">${help}</div>`:''}</div>`;
+    const val=(k,label)=>`<div class="field"><label>${label}</label><input type="text" class="mono" value="${esc(mt[k])}" oninput="W.metric.${k}=this.value.trim();metricPreview()"></div>`;
+    const needsValue=mt.aggregation==='sum'||mt.aggregation==='avg';
+    return`<div class="help" style="margin:0 0 12px">Regras pré-preenchidas para ${TYPES[w.type].toLowerCase()} a partir da carga recebida. Ajuste o que precisar.</div>
+    <div class="note" style="margin-bottom:14px"><div class="muted small">Carga recebida</div><pre class="mono">${esc(JSON.stringify(P,null,2))}</pre></div>
+    <h3 style="margin-bottom:8px">1. Métrica principal</h3>
+    <div class="grid g2"><div class="field"><label>O que o GOAT deve fazer</label><select onchange="W.metric.aggregation=this.value;renderWizard(document.getElementById('main'),W.edit)">${Object.entries(AGG).map(([k,v])=>`<option value="${k}" ${mt.aggregation===k?'selected':''}>${v}</option>`).join('')}</select></div>
+    ${needsValue?sel('value_field','Com qual campo'):`<div class="field"><label>Com qual campo</label><div class="note">Contagem e porcentagem não precisam de campo de valor.</div></div>`}</div>
+    <h3 style="margin:6px 0 8px">2. Quando contar</h3>
+    <div class="grid g2">${sel('event_field','Se o campo')}${val('event_value','for igual a')}</div>
+    <div class="grid g2">${sel('status_field','E também (opcional): se o campo')}${mt.status_field?val('status_value','for igual a'):'<div></div>'}</div>
+    <div class="help" style="margin:6px 0 10px">O evento é ligado à versão pelo campo <span class="mono">ab_click_id</span>, que o GOAT adiciona à URL de cada versão e a plataforma devolve no webhook.</div>
+    <div class="note" id="w-metric-preview"></div>`;}
+  if(s===5){const d=S.domains.find(x=>x.id===w.domain_id);const mt=w.metric;return`<div class="kv">
+    <b>Nome</b><span>${esc(w.name)}</span><b>Tipo</b><span>${TYPES[w.type]||'—'}</span>
+    <b>Versões</b><span>${w.variants.map((v,i)=>`<div><span class="tag t${VCLASS(i)}">${LETTER(i)}</span> ${esc(v.name)} — ${v.pct}% <span class="mono muted">${esc(v.url)}</span></div>`).join('')}</span>
+    <b>Link</b><span class="mono">${esc(d?'https://'+d.host+'/'+w.slug:defaultLink(w.slug))}</span>
+    <b>Início</b><span>${w.startMode==='now'&&!w.edit?'Agora':fmtDT(w.start)}</span><b>Término</b><span>${w.end?fmtD(w.end):'Sem data de término'}</span>
+    <b>Ao encerrar</b><span>${w.auto_winner?'Define a campeã e manda 100% do tráfego para ela':'Você escolhe a versão final manualmente'}</span>
+    <b>Webhook</b><span class="mono">${webhookUrl(w.webhook_token)}</span>
+    <b>Métrica principal</b><span>${AGG[mt.aggregation]} · <span class="mono">${esc(mt.event_field)}=${esc(mt.event_value)}</span>${mt.status_field?` com <span class="mono">${esc(mt.status_field)}=${esc(mt.status_value)}</span>`:''}${mt.value_field?` · valor em <span class="mono">${esc(mt.value_field)}</span>`:''}</span>
+  </div>`;}
+}
+function varHTML(v,i){return`<div class="card" style="padding:14px;margin-bottom:10px"><div class="row" style="justify-content:space-between;margin-bottom:8px"><span class="tag t${VCLASS(i)}">Versão ${LETTER(i)}</span>${i>1?`<button class="btn sm" onclick="W.variants.splice(${i},1);equalize();renderWizard(document.getElementById('main'),W.edit)">Remover</button>`:''}</div>
+  <div class="grid" style="grid-template-columns:1fr 2fr 110px"><div class="field"><label>Nome</label><input type="text" value="${esc(v.name)}" placeholder="${i===0?'Greenn':i===1?'Hotmart':'Versão '+LETTER(i)}" oninput="W.variants[${i}].name=this.value"></div>
+  <div class="field"><label>URL</label><input type="url" value="${esc(v.url)}" placeholder="https://" oninput="W.variants[${i}].url=this.value.trim()"></div>
+  <div class="field"><label>Tráfego</label><div class="row" style="flex-wrap:nowrap"><input type="number" min="0" max="100" step="1" value="${v.pct}" oninput="W.variants[${i}].pct=Number(this.value)||0;updateSplitBar()"><span class="muted">%</span></div></div></div></div>`;}
+function equalize(){const n=W.variants.length;const base=Math.floor(100/n);W.variants.forEach((v,i)=>v.pct=base+(i<100-base*n?1:0));}
+function updateSlugPreview(){const d=S.domains.find(x=>x.id===W.domain_id);const inp=document.getElementById('w-slug');if(!inp)return;if(!W.slugTouched){W.slug=slugify(W.name);inp.value=W.slug;}
+  const free=W.slug&&slugFree(W.slug,W.domain_id,W.exp_id);
+  document.getElementById('w-slug-msg').innerHTML=!W.slug?`<div class="err">Informe um slug.</div>`:free?`<div class="okmsg">Slug disponível</div>`:`<div class="err">Esse slug já está em uso neste domínio.</div>`;
+  document.getElementById('w-preview').textContent=d?`https://${d.host}/${W.slug||''}`:defaultLink(W.slug||'');}
+function updateSplitBar(){const el=document.getElementById('w-split');if(!el)return;const tot=W.variants.reduce((a,v)=>a+v.pct,0);
+  el.innerHTML=W.variants.map((v,i)=>`<span style="width:${Math.max(0,Math.min(100,v.pct))}%;background:var(--${VCLASS(i).toLowerCase()})"></span>`).join('');
+  document.getElementById('w-split-lbl').innerHTML=`<span>${W.variants.map((v,i)=>`<span class="tag t${VCLASS(i)}">${LETTER(i)}</span> ${v.pct}% `).join(' ')}</span><span class="${tot===100?'okmsg':'err'}" style="margin:0">Soma: ${tot}%</span>`;}
+
+/* O teste é gravado como rascunho ao chegar na etapa do webhook: o endereço precisa existir no servidor para receber a carga. */
+async function saveDraft(){
+  const base={user_id:WS.owner_id,name:W.name.trim(),type:W.type,domain_id:W.domain_id||null,slug:W.slug,start_at:iso(W.startMode==='now'&&!W.edit?now():W.start),end_at:W.end?iso(W.end):null,auto_winner:!!W.end&&W.auto_winner,primary_metric:W.metric.aggregation};
+  if(!W.exp_id){const {data,error}=await sb.from('experiments').insert({...base,draft:true}).select().single();if(error)throw error;W.exp_id=data.id;W.webhook_token=data.webhook_token;}
+  else{const {error}=await sb.from('experiments').update(base).eq('id',W.exp_id);if(error)throw error;}
+  await syncVariants();
+}
+async function syncVariants(){
+  const {data:existing}=await sb.from('variants').select('id').eq('experiment_id',W.exp_id);const keep=new Set();
+  for(let i=0;i<W.variants.length;i++){const v=W.variants[i];const row={experiment_id:W.exp_id,name:v.name.trim(),url:v.url,traffic_percentage:v.pct,position:i};
+    if(String(v.id).startsWith('new_')){const {data,error}=await sb.from('variants').insert(row).select().single();if(error)throw error;v.id=data.id;}
+    else{const {error}=await sb.from('variants').update(row).eq('id',v.id);if(error)throw error;}
+    keep.add(v.id);}
+  for(const r of existing||[])if(!keep.has(r.id))await sb.from('variants').delete().eq('id',r.id);
+}
+/* A etapa 4 fica consultando webhook_events do rascunho: só libera quando algo chegou de fato */
+setInterval(async()=>{if(!sb||!W||W.step!==3||W.test_payload||!W.exp_id)return;
+  const {data}=await sb.from('webhook_events').select('payload').eq('experiment_id',W.exp_id).order('created_at',{ascending:false}).limit(1);
+  if(data&&data[0]&&W&&W.step===3)wizGotPayload(data[0].payload);},2000);
+function wizGotPayload(p){
+  W.test_payload=p;W.fields=flatKeys(p);prefillRules(W.metric,W.fields,p,W.type);
+  toast('Carga de teste recebida pelo webhook');renderWizard(document.getElementById('main'),W.edit);}
+function prefillRules(m,F,p,type){
+  const pick=list=>list.find(k=>F.includes(k))||'';const v=k=>String(deepGet(p,k)??'');
+  if(!m.event_field)m.event_field=pick(['event','evento','event_type','type','trigger','hook_action','webhook_type','action']);
+  if(m.event_field&&!m.event_value)m.event_value=v(m.event_field);
+  if(type==='capture'){
+    if(!m.aggregation||m.aggregation==='sum')m.aggregation='count';m.value_field=m.value_field||'';
+    if(!m.status_field){m.status_field='';m.status_value='';}
+  }else{
+    if(!m.value_field)m.value_field=pick(['amount','value','price','valor','total','full_price','net_amount','purchase_amount']);
+    if(!m.aggregation||m.aggregation==='count')m.aggregation=m.value_field?'sum':'count';
+    if(!m.status_field){m.status_field=['status','purchase_status','sale_status','payment_status'].find(k=>F.includes(k)&&k!==m.event_field)||'';if(m.status_field)m.status_value=v(m.status_field);}
+  }
+  m.id_field='ab_click_id';
+}
+function metricPreview(){const el=document.getElementById('w-metric-preview');if(!el)return;const m=W.metric;
+  const what={count:'contar quantos eventos',sum:`somar <span class="mono">${esc(m.value_field||'?')}</span> dos eventos`,avg:`tirar a média de <span class="mono">${esc(m.value_field||'?')}</span> por evento`,rate:'calcular a % de visitantes de cada versão que geraram um evento'}[m.aggregation];
+  el.innerHTML=`<strong>Regra:</strong> para cada versão, ${what} sempre que <span class="mono">${esc(m.event_field||'?')}</span> for <span class="mono">${esc(m.event_value||'?')}</span>${m.status_field?` e <span class="mono">${esc(m.status_field)}</span> for <span class="mono">${esc(m.status_value)}</span>`:''}. Ligado à versão por <span class="mono">ab_click_id</span>.`;}
+function wizValidate(s){
+  if(s===0){if(!W.name.trim())return'Dê um nome ao teste.';if(!W.type)return'Escolha o tipo de página.';if(W.startMode==='date'&&!W.start)return'Escolha a data de início.';if(W.startMode==='date'&&W.start<now()-60000&&!(W.edit&&W.start===W.origStart))return'A data de início não pode ser no passado.';if(W.end&&W.end<=W.start)return'A data de término precisa ser depois do início.';}
+  if(s===1){if(W.variants.length<2)return'Adicione pelo menos duas versões.';for(const v of W.variants){if(!v.name.trim())return'Toda versão precisa de nome.';try{const u=new URL(v.url);if(!/^https?:$/.test(u.protocol))throw 0;}catch(e){return`A URL da versão "${v.name||'?'}" precisa começar com http:// ou https://.`;}}
+    const norm=u=>u.replace(/\/+$/,'').toLowerCase();const urls=W.variants.map(v=>norm(v.url));if(new Set(urls).size!==urls.length)return'As versões precisam ter URLs diferentes.';
+    if(W.variants.reduce((a,v)=>a+v.pct,0)!==100)return'A distribuição precisa somar 100%.';}
+  if(s===2){if(!W.slug)return'Informe um slug.';if(!slugFree(W.slug,W.domain_id,W.exp_id))return'Esse slug já está em uso neste domínio.';}
+  if(s===3){if(!W.test_payload)return'Nenhuma carga de teste chegou ao webhook ainda.';}
+  if(s===4){if(!W.metric.event_field)return'Escolha o campo que identifica o evento.';if(!W.metric.event_value)return'Informe o valor do evento.';if(W.metric.status_field&&!W.metric.status_value)return'Informe o valor da segunda condição.';if((W.metric.aggregation==='sum'||W.metric.aggregation==='avg')&&!W.metric.value_field)return'Para somar ou tirar média, escolha o campo de valor.';}
+  return null;
+}
+async function wizNext(){const err=wizValidate(W.step);if(err){document.getElementById('w-err').textContent=err;return;}if(W.step===0&&!W.slugTouched)W.slug=slugify(W.name);
+  if(W.step===2){const b=document.getElementById('w-next');b.disabled=true;b.textContent='Salvando…';try{await saveDraft();}catch(e){if(String(e.code)==='23505'){W.step=2;renderWizard(document.getElementById('main'),W.edit);document.getElementById('w-err').textContent='Esse slug já está em uso no link padrão. Escolha outro.';return;}fail(e,'Não foi possível gravar o teste');b.disabled=false;b.textContent='Continuar';return;}}
+  W.step++;renderWizard(document.getElementById('main'),W.edit);}
+function wizPrev(){W.step--;renderWizard(document.getElementById('main'),W.edit);}
+async function wizFinish(){
+  for(let i=0;i<5;i++){const err=wizValidate(i);if(err){W.step=i;renderWizard(document.getElementById('main'),W.edit);document.getElementById('w-err').textContent=err;return;}}
+  const b=document.getElementById('w-finish');b.disabled=true;b.textContent='Salvando…';
+  try{
+    if(!W.end)W.auto_winner=false;
+    await saveDraft();const m=W.metric;
+    const {error:e1}=await sb.from('experiments').update({draft:false,sample_payload:W.test_payload,webhook_fields:W.fields}).eq('id',W.exp_id);if(e1)throw e1;
+    const {error:e2}=await sb.from('metric_configurations').upsert({experiment_id:W.exp_id,event_field:m.event_field,event_value:m.event_value,status_field:m.status_field||null,status_value:m.status_value||null,value_field:m.value_field||null,id_field:m.id_field||'ab_click_id',aggregation_type:m.aggregation,updated_at:iso(now())},{onConflict:'experiment_id'});if(e2)throw e2;
+    await sb.from('experiment_history').insert({experiment_id:W.exp_id,action:'note',details:{msg:W.edit?'Teste editado':'Teste criado'}});
+    const id=W.exp_id;W=null;await boot();toast(W?'':'Teste salvo');go('#/teste/'+id);
+  }catch(e){fail(e,'Não foi possível salvar');b.disabled=false;b.textContent='Tentar de novo';}
+}
+
+/* ===================== dashboard ===================== */
+let charts=[];let TAB={};let LOADED={};
+const TABS=[['resumo','Resumo'],['graficos','Gráficos'],['historico','Histórico diário'],['webhook','Webhook e eventos'],['config','Configuração'],['testar','Testar o link']];
+function setTab(id,t){TAB[id]=t;render();}
+function renderDashboard(m,id){
+  const e=S.experiments.find(x=>x.id===id);if(!e){m.innerHTML='<div class="empty">Teste não encontrado.</div>';return;}
+  if(!LOADED[id]){LOADED[id]=true;m.innerHTML='<div class="empty">Carregando…</div>';loadExp(id).then(()=>render()).catch(err=>fail(err,'Erro ao carregar'));return;}
+  const st=displayStatus(e);const r=computeResults(e);const link=linkOf(e);const end=endAt(e);const tab=TAB[id]||'resumo';
+  const elapsed=Math.max(0,Math.floor(((st==='finished'?(e.finished_at||now()):now())-e.start_at)/DAY));
+  const remaining=end?Math.max(0,Math.ceil((end-now())/DAY)):null;const pct=end?Math.min(100,Math.max(0,(now()-e.start_at)/(end-e.start_at)*100)):null;
+  const V=e.variants;const winner=V.find(v=>v.id===e.winning_variant_id);const d=domainOf(e);
+  m.innerHTML=`
+  <div class="topbar"><div><div class="row" style="gap:10px"><h1>${esc(e.name)}</h1><span class="badge ${st}">${STATUS[st]}</span></div><div class="muted" style="margin-top:2px">${TYPES[e.type]}</div>
+    <div class="row" style="margin-top:8px;gap:8px"><span class="mono">${esc(link)}</span><button class="btn sm" onclick="copy('${esc(link)}')">Copiar link</button>${d&&d.status!=='connected'?`<span class="badge pending">domínio pendente · use o link provisório (aba Testar o link)</span>`:''}</div></div>
+  <div class="row">${can('edit')?`<button class="btn" onclick="go('#/editar/${e.id}')">Editar teste</button>
+    ${st==='active'?`<button class="btn" onclick="pauseExp('${e.id}')">Pausar</button>`:''}${st==='paused'?`<button class="btn" onclick="resumeExp('${e.id}')">Retomar</button>`:''}
+    ${st!=='finished'?`<button class="btn danger" onclick="openFinish('${e.id}')">Encerrar teste</button>`:!winner?`<button class="btn primary" onclick="openFinish('${e.id}')">Escolher versão final</button>`:''}
+    <button class="btn" onclick="archiveExp('${e.id}',${!e.archived})">${e.archived?'Desarquivar':'Arquivar'}</button>`:''}
+    <button class="btn" onclick="setTab('${e.id}','webhook')">Configurar webhook</button></div></div>
+  ${e.archived?`<div class="note" style="margin-bottom:14px">Teste arquivado: fica fora da lista principal. O link continua se comportando conforme o status (${STATUS[st].toLowerCase()}).</div>`:''}
+  ${st==='finished'?`<div class="card" style="margin-bottom:14px;border-color:var(--line-strong)">${winner?`Teste encerrado em ${fmtD(e.finished_at)}. O link envia <strong>100% do tráfego</strong> para <span class="tag t${VCLASS(V.indexOf(winner))}">${LETTER(V.indexOf(winner))}</span> ${esc(winner.name)}.`:`Teste encerrado. Escolha qual versão continuará recebendo o tráfego — até lá, novos acessos vão para a versão A.`}</div>`:''}
+  <div class="card"><div class="row" style="justify-content:space-between"><div><strong>${st==='scheduled'?'Começa em '+fmtDT(e.start_at):`Teste há ${elapsed} dia${elapsed===1?'':'s'}`}</strong>
+    ${end&&st!=='finished'?` <span class="muted">· Faltam ${remaining} dia${remaining===1?'':'s'} · Término: ${fmtD(end)}</span>`:end?` <span class="muted">· Término: ${fmtD(end)}</span>`:` <span class="muted">· Sem data de término</span>`}</div><span class="muted small">Início ${fmtDT(e.start_at)}</span></div>
+    ${pct!==null?`<div class="progress" style="margin-top:10px"><i style="width:${pct}%"></i></div>`:''}</div>
+  <div class="tabs">${TABS.map(([k,l])=>`<button class="${tab===k?'on':''}" onclick="setTab('${e.id}','${k}')">${l}</button>`).join('')}</div>
+  <div id="tab">${({resumo:tabResumo,graficos:tabGraficos,historico:tabHistorico,webhook:tabWebhook,config:tabConfig,testar:tabTestar})[tab](e,r)}</div>`;
+  if(tab==='graficos')drawCharts(e,r);
+}
+function tabResumo(e,r){const V=e.variants,rows=V.map(v=>r.per[v.id]);
+  return`<div class="grid g4">
+    <div class="card stat"><h3>Cliques totais</h3><div class="v">${fmtN(r.clicks)}</div><div class="d muted small">acessos ao link</div></div>
+    <div class="card stat"><h3>Visitantes</h3><div class="v">${fmtN(r.visitors)}</div><div class="d muted small">identificados e atribuídos</div></div>
+    <div class="card stat"><h3>Eventos recebidos</h3><div class="v">${fmtN(r.events)}</div><div class="d muted small">via webhook</div></div>
+    <div class="card stat"><h3>Eventos não atribuídos</h3><div class="v">${fmtN(r.unattributed)}</div><div class="d muted small"><a href="#" onclick="event.preventDefault();setTab('${e.id}','webhook')">ver eventos</a></div></div></div>
+  <div class="section"><h2>Resultado: ${esc(primLabel(e))}</h2>
+  <div class="vs">${V.slice(0,2).map((v,i)=>{const p=rows[i],o=rows[1-i];const diff=o&&o.primary?((p.primary-o.primary)/o.primary*100):null;
+    return`<div class="card vcard ${VCLASS(i)}"><div class="row" style="justify-content:space-between"><span><span class="tag t${VCLASS(i)}">${LETTER(i)}</span> <strong>${esc(v.name)}</strong></span></div>
+    <div class="big">${fmtPrim(e,p.primary)}</div>
+    <div class="muted small">${fmtN(p.clicks)} acessos no link · ${fmtN(p.visitors)} visitantes · ${fmtN(p.count)} evento${p.count===1?'':'s'} · conversão ${fmtP(p.conv)}</div>
+    <div style="margin-top:10px">${diff!==null?`<span class="${diff>=0?'okmsg':'err'}" style="margin:0;font-size:13px">${diff>=0?'+':''}${fmtP(diff).replace('%','')}% vs ${LETTER(1-i)} (${diff>=0?'+':'-'}${fmtPrim(e,Math.abs(p.primary-o.primary))})</span>`:'<span class="muted small">Sem base de comparação ainda</span>'}</div></div>`;}).join('<div class="mid">vs</div>')}</div>
+  <div class="help">O GOAT não declara vencedora durante o teste. Compare, espere volume e decida ao encerrar${e.auto_winner?' (ou deixe que ele defina a campeã na data de término, como configurado)':''}.</div></div>
+  <div class="section"><h2>Comparação das versões</h2><div class="card" style="padding:0"><div class="tablewrap"><table>
+    <tr><th>Métrica</th>${V.map((v,i)=>`<th class="n"><span class="tag t${VCLASS(i)}">${LETTER(i)}</span> ${esc(v.name)}</th>`).join('')}</tr>
+    <tr><td>Acessos no link</td>${rows.map(p=>`<td class="n">${fmtN(p.clicks)}</td>`).join('')}</tr>
+    <tr><td>Visitantes</td>${rows.map(p=>`<td class="n">${fmtN(p.visitors)}</td>`).join('')}</tr>
+    <tr><td>Resultados (eventos)</td>${rows.map(p=>`<td class="n">${fmtN(p.count)}</td>`).join('')}</tr>
+    <tr><td>Conversão</td>${rows.map(p=>`<td class="n">${fmtP(p.conv)}</td>`).join('')}</tr>
+    ${e.metric.value_field?`<tr><td>Valor gerado</td>${rows.map(p=>`<td class="n">${fmtR(p.sum)}</td>`).join('')}</tr><tr><td>Ticket médio</td>${rows.map(p=>`<td class="n">${fmtR(p.avg)}</td>`).join('')}</tr>`:''}
+  </table></div></div></div>`;}
+function tabGraficos(e,r){return`<div class="grid g2">
+    <div class="card"><h3>Distribuição de tráfego (visitantes)</h3><div class="chartbox"><canvas id="ch-dist"></canvas></div></div>
+    <div class="card"><h3>Visitantes por dia</h3><div class="chartbox"><canvas id="ch-vis"></canvas></div></div>
+    <div class="card"><h3>Resultado acumulado por dia</h3><div class="chartbox"><canvas id="ch-res"></canvas></div></div>
+    <div class="card"><h3>Conversão por versão</h3><div class="chartbox"><canvas id="ch-conv"></canvas></div></div>
+    ${e.metric.value_field?`<div class="card" style="grid-column:1/-1"><h3>Receita acumulada por versão</h3><div class="chartbox"><canvas id="ch-rev"></canvas></div></div>`:''}</div>`;}
+function tabHistorico(e){const {keys,days}=dailySeries(e);const useSum=['sum','avg'].includes(e.metric.aggregation);const V=e.variants;
+  if(!keys.length)return`<div class="empty">Sem dados diários ainda.</div>`;
+  return`<div class="card" style="padding:0"><div class="tablewrap"><table><tr><th>Data</th>${V.map((v,i)=>`<th class="n">Visitantes ${LETTER(i)}</th>`).join('')}${V.map((v,i)=>`<th class="n">Resultado ${LETTER(i)}</th>`).join('')}</tr>
+  ${keys.map(k=>`<tr><td>${k.slice(8,10)}/${k.slice(5,7)}/${k.slice(0,4)}</td>${V.map(v=>`<td class="n">${fmtN(days[k][v.id].visitors)}</td>`).join('')}${V.map(v=>`<td class="n">${useSum?fmtR(days[k][v.id].sum):fmtN(days[k][v.id].count)}</td>`).join('')}</tr>`).join('')}</table></div></div>`;}
+function tabConfig(e){const V=e.variants,r=computeResults(e),d=domainOf(e),mt=e.metric;
+  return`<div class="grid g2" style="align-items:start"><div class="card"><h2 style="margin-bottom:12px">Link e distribuição</h2><div class="kv">
+    <b>Link do teste</b><span class="mono">${esc(linkOf(e))}</span><b>Domínio</b><span>${d?esc(d.host)+' · '+(d.status==='connected'?'conectado':'configuração pendente'):'Link padrão do GOAT'}</span><b>Slug</b><span class="mono">${esc(e.slug)}</span>
+    ${d?`<b>Link provisório</b><span class="mono small" style="word-break:break-all">${esc(tempLinkOf(e))}<div class="help">Funciona já, antes do DNS propagar. Passa direto pela função de redirecionamento.</div></span>`:''}
+    <b>Split configurado</b><span>${V.map((v,i)=>`<span class="tag t${VCLASS(i)}">${LETTER(i)}</span> ${v.pct}% `).join(' ')}</span>
+    <b>Split realizado</b><span>${V.map((v,i)=>`<span class="tag t${VCLASS(i)}">${LETTER(i)}</span> ${fmtP(r.per[v.id].share)} `).join(' ')}</span></div>
+    <div class="split" style="margin-top:12px">${V.map((v,i)=>`<span style="width:${v.pct}%;background:var(--${VCLASS(i).toLowerCase()})"></span>`).join('')}</div>
+    <h3 style="margin-top:18px">URLs das versões</h3>${V.map((v,i)=>`<div style="margin-top:6px"><span class="tag t${VCLASS(i)}">${LETTER(i)}</span> ${esc(v.name)}<div class="mono muted" style="word-break:break-all">${esc(v.url)}</div></div>`).join('')}</div>
+  <div class="card"><h2 style="margin-bottom:12px">Regras do teste</h2><div class="kv">
+    <b>Tipo</b><span>${TYPES[e.type]}</span><b>Início</b><span>${fmtDT(e.start_at)}</span><b>Término</b><span>${e.end_at?fmtD(e.end_at):'Sem data de término'}</span>
+    <b>Ao encerrar</b><span>${e.auto_winner?'Define a campeã automaticamente e manda 100% do tráfego para ela':'Escolha manual da versão final'}</span>
+    <b>Métrica principal</b><span>${AGG[mt.aggregation]}</span><b>Evento</b><span class="mono">${esc(mt.event_field)}=${esc(mt.event_value)}</span><b>Filtro</b><span class="mono">${mt.status_field?esc(mt.status_field)+'='+esc(mt.status_value):'—'}</span><b>Campo de valor</b><span class="mono">${esc(mt.value_field||'—')}</span></div>
+    ${can('edit')?`<h3 style="margin-top:18px">Zerar métricas</h3><div class="help" style="margin:4px 0 8px">Apaga visitantes, cliques e eventos deste teste e recomeça a contagem do zero. As URLs, o split, o webhook e as regras ficam como estão.</div>
+    <button class="btn danger sm" onclick="resetMetrics('${e.id}')">Zerar métricas do teste</button>
+    <h3 style="margin-top:18px">Arquivar teste</h3><div class="help" style="margin:4px 0 8px">Tira o teste da lista principal sem apagar nada. Dá para desarquivar depois.</div>
+    <button class="btn sm" onclick="archiveExp('${e.id}',${!e.archived})">${e.archived?'Desarquivar teste':'Arquivar teste'}</button>`:''}
+    ${can('delete')?`<h3 style="margin-top:18px">Excluir teste</h3><div class="help" style="margin:4px 0 8px">Remove o teste e todos os dados. O link deixa de funcionar.</div>
+    <button class="btn danger sm" onclick="deleteExp('${e.id}')">Excluir teste</button>`:''}
+    <h3 style="margin-top:18px">Histórico do teste</h3><div class="small">${(e.history||[]).slice().reverse().map(h=>`<div class="row" style="justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--line)"><span>${esc(h.msg)}</span><span class="muted">${fmtDT(h.at)}</span></div>`).join('')}</div></div></div>`;}
+function tabWebhook(e,r){const isVal=k=>k==='event_value'||k==='status_value';const fields=e.webhook_fields||[];
+  const mf=(k,label)=>`<div class="field"><label>${label}</label>${!isVal(k)&&fields.length?`<select class="mono" onchange="setMetric('${e.id}','${k}',this.value)"><option value="">—</option>${fields.map(f=>`<option ${f===e.metric[k]?'selected':''}>${esc(f)}</option>`).join('')}${e.metric[k]&&!fields.includes(e.metric[k])?`<option selected>${esc(e.metric[k])}</option>`:''}</select>`:`<input type="text" class="mono" value="${esc(e.metric[k]||'')}" oninput="setMetric('${e.id}','${k}',this.value.trim())">`}</div>`;
+  return`<div class="grid g2" style="align-items:start">
+    <div class="card"><h3>Endereço do webhook deste teste</h3><div class="row" style="margin:6px 0 12px"><span class="mono" style="word-break:break-all">${webhookUrl(e.webhook_token)}</span><button class="btn sm" onclick="copy('${webhookUrl(e.webhook_token)}')">Copiar</button></div>
+      <h3>Campos recebidos</h3>${fields.length?`<div class="pill-list mono" style="margin-top:6px">${fields.map(f=>`<span>${esc(f)}</span>`).join('')}</div>`:`<div class="muted small" style="margin-top:6px">Nenhum webhook recebido ainda.</div>`}
+      <h3 style="margin-top:14px">Enviar webhook de teste</h3><div class="help" style="margin:2px 0 6px">Envia este JSON de verdade para o endereço acima. Sem um <span class="mono">ab_click_id</span> válido, o evento fica como não atribuído.</div>
+      <textarea id="wh-json" class="mono">${esc(JSON.stringify({...(e.sample_payload||{event:'purchase_approved',status:'approved',amount:197}),order_id:String(Math.floor(Math.random()*900000+100000)),ab_click_id:lastClickId(e)||'clk_desconhecido'},null,2))}</textarea>
+      <div class="row" style="margin-top:8px"><button class="btn" onclick="simWebhook('${e.id}')">Enviar para este teste</button></div></div>
+    <div class="card"><h3>Mapeamento e métrica</h3><div class="help" style="margin:4px 0 12px">Alterar aqui recalcula o dashboard inteiro, porque o payload original de cada evento fica guardado.</div>
+      ${mf('event_field','Campo que identifica o evento')}${mf('event_value','Valor do evento que você quer medir')}${mf('status_field','Campo de status (opcional)')}${mf('status_value','Valor que significa aprovado')}${mf('value_field','Campo de valor')}
+      <div class="field"><label>O que fazer com o evento principal</label><select onchange="setMetric('${e.id}','aggregation',this.value)">${Object.entries(AGG).map(([k,v])=>`<option value="${k}" ${e.metric.aggregation===k?'selected':''}>${v}</option>`).join('')}</select></div>
+      ${can('edit')?`<button class="btn primary" onclick="applyMetric('${e.id}')">Salvar e recalcular</button>`:'<div class="help">Você não tem permissão para alterar as regras.</div>'}</div></div>
+  <div class="section"><h2>Eventos recebidos (últimos 50)</h2>${eventsTable(e)}</div>`;}
+function tabTestar(e){const d=domainOf(e);const st=displayStatus(e);
+  return`<div class="card"><div class="help" style="margin:0 0 12px">Abra o link num navegador: você é identificado, recebe uma versão e é redirecionado com os parâmetros <span class="mono">ab_test_id, ab_variant_id, ab_visitor_id, ab_click_id</span>. Volte aqui e clique em Atualizar para ver o clique contado.</div>
+    ${st!=='active'?`<div class="note" style="border-left:3px solid var(--warn);margin-bottom:12px">Teste ${STATUS[st].toLowerCase()}: novos visitantes não são distribuídos nem contados. ${st==='scheduled'?'Ele começa em '+fmtDT(e.start_at)+'.':st==='paused'?'Retome o teste para distribuir.':'Todo acesso vai para a versão final.'}</div>`:''}
+    <div class="kv"><b>${d?'Link definitivo':'Link do teste'}</b><span class="mono" style="word-break:break-all">${esc(linkOf(e))}${d&&d.status!=='connected'?'<div class="help">Só funciona depois que o domínio estiver conectado (aba Domínios).</div>':''}</span>
+    ${d?`<b>Link provisório</b><span class="mono small" style="word-break:break-all">${esc(tempLinkOf(e))}<div class="help">Funciona agora, sem depender do DNS.</div></span>`:''}</div>
+    <div class="row" style="margin-top:14px"><a class="btn primary" href="${esc(d&&d.status==='connected'?linkOf(e):tempLinkOf(e))}" target="_blank" rel="noopener">Abrir o link em nova aba</a><button class="btn" onclick="refreshExp('${e.id}').then(render)">Atualizar</button></div>
+    <div class="help" style="margin-top:12px">Para testar a atribuição: abra o link, copie o <span class="mono">ab_click_id</span> da URL de destino, e envie um webhook de teste com ele na aba "Webhook e eventos".</div></div>`;}
+function lastClickId(e){const ev=(R[e.id]?.events||[]).find(x=>x.click_id);return ev?ev.click_id:null;}
+let pendingMetric={};
+function setMetric(id,k,v){(pendingMetric[id]=pendingMetric[id]||{})[k]=v;}
+async function applyMetric(id){const e=S.experiments.find(x=>x.id===id);const m={...e.metric,...(pendingMetric[id]||{})};pendingMetric[id]={};
+  const {error}=await sb.from('metric_configurations').upsert({experiment_id:id,event_field:m.event_field,event_value:m.event_value,status_field:m.status_field||null,status_value:m.status_value||null,value_field:m.value_field||null,id_field:m.id_field||'ab_click_id',aggregation_type:m.aggregation,updated_at:iso(now())},{onConflict:'experiment_id'});
+  if(error)return fail(error,'Não foi possível salvar');await sb.from('experiments').update({primary_metric:m.aggregation}).eq('id',id);await hist(e,'Métrica principal alterada');await refreshExp(id);toast('Métrica atualizada');render();}
+function eventsTable(e){const m=e.metric;const ev=(R[e.id]?.events||[]);const V=e.variants;if(!ev.length)return`<div class="empty">Nenhum evento recebido.</div>`;
+  return`<div class="card" style="padding:0"><div class="tablewrap"><table><tr><th>Quando</th><th>Evento</th><th>Versão</th><th>Conta?</th><th class="n">Valor</th><th>click_id</th><th>Payload</th></tr>
+  ${ev.map(x=>{const i=V.findIndex(v=>v.id===x.variant_id);const q=qualifies(m,x.payload);const val=m.value_field?Number(deepGet(x.payload,m.value_field))||0:0;return`<tr><td class="small">${fmtDT(x.created_at)}</td><td class="mono">${esc(x.event_type||'—')}</td><td>${x.attributed&&i>=0?`<span class="tag t${VCLASS(i)}">${LETTER(i)}</span> ${esc(V[i]?.name)}`:`<span class="badge pending">Não atribuído</span>`}</td><td>${q?'Sim':'<span class="muted">Não</span>'}</td><td class="n">${fmtR(val)}</td><td class="mono small">${esc(x.click_id||'—')}</td><td><details><summary class="small muted" style="cursor:pointer">ver</summary><pre class="mono small" style="margin-top:6px">${esc(JSON.stringify(x.payload,null,1))}</pre></details></td></tr>`;}).join('')}</table></div></div>`;}
+function drawCharts(e,r){
+  charts.forEach(c=>c.destroy());charts=[];if(typeof Chart==='undefined')return;
+  const css=getComputedStyle(document.documentElement);const col=n=>css.getPropertyValue(n).trim();const V=e.variants;
+  const colors=V.map((v,i)=>col('--'+VCLASS(i).toLowerCase()));Chart.defaults.color=col('--muted');Chart.defaults.borderColor=col('--line');Chart.defaults.font.family=css.getPropertyValue('--sans');
+  const base={responsive:true,maintainAspectRatio:false,animation:false,plugins:{legend:{position:'bottom',labels:{boxWidth:10}}}};
+  const {keys,days}=dailySeries(e);const labels=keys.map(k=>k.slice(8,10)+'/'+k.slice(5,7));const useSum=['sum','avg'].includes(e.metric.aggregation);
+  const cum=fn=>V.map((v,i)=>{let acc=0;return{label:LETTER(i)+' '+v.name,data:keys.map(k=>acc+=fn(days[k][v.id])),borderColor:colors[i],backgroundColor:colors[i],tension:.2,pointRadius:2};});
+  const mk=(id,cfg)=>{const c=document.getElementById(id);if(c)charts.push(new Chart(c,cfg));};
+  mk('ch-dist',{type:'doughnut',data:{labels:V.map((v,i)=>LETTER(i)+' '+v.name),datasets:[{data:V.map(v=>r.per[v.id].visitors),backgroundColor:colors,borderWidth:0}]},options:{...base,cutout:'65%'}});
+  mk('ch-vis',{type:'line',data:{labels,datasets:V.map((v,i)=>({label:LETTER(i)+' '+v.name,data:keys.map(k=>days[k][v.id].visitors),borderColor:colors[i],backgroundColor:colors[i],tension:.2,pointRadius:2}))},options:{...base,scales:{y:{beginAtZero:true}}}});
+  mk('ch-res',{type:'line',data:{labels,datasets:cum(d=>useSum?d.sum:d.count)},options:{...base,scales:{y:{beginAtZero:true}}}});
+  mk('ch-conv',{type:'bar',data:{labels:V.map((v,i)=>LETTER(i)+' '+v.name),datasets:[{label:'Conversão %',data:V.map(v=>+r.per[v.id].conv.toFixed(2)),backgroundColor:colors,borderRadius:4}]},options:{...base,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}}}});
+  mk('ch-rev',{type:'line',data:{labels,datasets:cum(d=>d.sum)},options:{...base,scales:{y:{beginAtZero:true,ticks:{callback:v=>'R$'+fmtN(v)}}}}});
+}
+
+/* ===================== ações ===================== */
+async function setStatus(id,status,msg){const e=S.experiments.find(x=>x.id===id);const {error}=await sb.from('experiments').update({status}).eq('id',id);if(error)return fail(error);await hist(e,msg);await refreshExp(id);toast(msg);render();}
+async function archiveExp(id,flag){const e=S.experiments.find(x=>x.id===id);const {error}=await sb.from('experiments').update({archived:flag}).eq('id',id);if(error)return fail(error);await hist(e,flag?'Teste arquivado':'Teste desarquivado');await refreshExp(id);toast(flag?'Teste arquivado':'Teste desarquivado');render();}
+function pauseExp(id){setStatus(id,'paused','Teste pausado');}
+function resumeExp(id){setStatus(id,'active','Teste retomado');}
+function openFinish(id){const e=S.experiments.find(x=>x.id===id);const r=computeResults(e);
+  document.getElementById('modal').innerHTML=`<div class="modal-bg" onclick="if(event.target===this)closeModal()"><div class="modal"><h2>Encerrar teste</h2>
+  <div class="muted" style="margin:6px 0 14px">O split para. Qual versão continuará recebendo o tráfego? O link continua exatamente o mesmo e passa a enviar 100% para a escolhida.</div>
+  ${e.variants.map((v,i)=>{const p=r.per[v.id];return`<button class="btn" style="display:block;width:100%;text-align:left;margin-bottom:8px;padding:12px" onclick="finishExp('${e.id}','${v.id}')"><span class="tag t${VCLASS(i)}">${LETTER(i)}</span> <strong>${esc(v.name)}</strong><div class="muted small" style="margin-top:4px">${fmtN(p.visitors)} visitantes · ${fmtN(p.count)} eventos · conversão ${fmtP(p.conv)} · ${fmtR(p.sum)}</div></button>`;}).join('')}
+  <div class="row" style="justify-content:flex-end;margin-top:8px"><button class="btn" onclick="closeModal()">Cancelar</button></div></div></div>`;}
+function closeModal(){document.getElementById('modal').innerHTML='';}
+async function resetMetrics(id){const e=S.experiments.find(x=>x.id===id);if(!confirm('Zerar todas as métricas de "'+e.name+'"? Visitantes, cliques e eventos serão apagados. Isso não tem volta.'))return;
+  const {error}=await sb.rpc('reset_experiment_metrics',{p_experiment:id});if(error)return fail(error,'Não foi possível zerar');await refreshExp(id);toast('Métricas zeradas');render();}
+async function deleteExp(id){const e=S.experiments.find(x=>x.id===id);if(!confirm('Excluir o teste "'+e.name+'" e todos os dados? O link deixa de funcionar.'))return;
+  const {error}=await sb.from('experiments').delete().eq('id',id);if(error)return fail(error);await boot();go('#/testes');}
+async function finishExp(id,vid){const e=S.experiments.find(x=>x.id===id);const v=e.variants.find(x=>x.id===vid);
+  const patch={winning_variant_id:vid};if(e.status!=='finished'){patch.status='finished';patch.finished_at=iso(now());}
+  const {error}=await sb.from('experiments').update(patch).eq('id',id);if(error)return fail(error);
+  if(patch.status)await hist(e,'Teste encerrado manualmente');await hist(e,`Versão final escolhida: ${LETTER(e.variants.indexOf(v))} ${v.name} (100% do tráfego)`);
+  closeModal();await refreshExp(id);toast('Teste encerrado');render();}
+async function simWebhook(id){const e=S.experiments.find(x=>x.id===id);let p;try{p=JSON.parse(document.getElementById('wh-json').value);}catch(err){toast('JSON inválido.');return;}
+  try{const r=await fetch(webhookUrl(e.webhook_token),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(p)});const j=await r.json().catch(()=>({}));
+    if(!r.ok)throw new Error(j.error||('HTTP '+r.status));toast(j.attributed?'Evento recebido e atribuído a uma versão':'Evento recebido como não atribuído');}
+  catch(err){fail(err,'Webhook não respondeu');}
+  await refreshExp(id);render();}
+
+/* ===================== início ===================== */
+(async()=>{
+  if(!sb){render();return;}
+  const {data}=await sb.auth.getSession();USER=data?.session?.user||null;
+  sb.auth.onAuthStateChange((_ev,session)=>{const u=session?.user||null;if(!!u!==!!USER){USER=u;if(u)boot();else render();}});
+  if(USER)await boot();else render();
+})();
+</script>
+</body>
+</html>
